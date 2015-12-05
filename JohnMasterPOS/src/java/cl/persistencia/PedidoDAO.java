@@ -36,8 +36,8 @@ public class PedidoDAO {
         try (PreparedStatement stmt = cnx.prepareStatement(sql)) {
             stmt.setInt(1, pe.getRut());
             stmt.setString(2, pe.getMedioPago());
-            stmt.setByte(3, pe.getAgrandaBebidaPapas());
-            stmt.setByte(4, pe.getParaLlevar());
+            stmt.setBoolean(3, pe.getAgrandaBebidaPapas());
+            stmt.setBoolean(4, pe.getParaLlevar());
             stmt.setInt(5, pe.getTotal());
                     
             int filasAfectadas = stmt.executeUpdate();
@@ -46,15 +46,25 @@ public class PedidoDAO {
         }
     }
     
-    
-    
-    
-    
-    
-    
-    public void buscar()
+    public Pedido buscar(int ticket)
     {
-        String sql="";
+        String sql="select * from pedido where ticket = ?";
+        Pedido pedido = new Pedido();
+        try (PreparedStatement stmt = cnx.prepareStatement(sql)){
+            stmt.setInt(1, ticket);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                pedido.setAgrandaBebidaPapas(rs.getBoolean("agranda_bedida_papas"));
+                pedido.setMedioPago(rs.getString("medio_pago"));
+                pedido.setParaLlevar(rs.getBoolean("para_llevar"));
+                pedido.setRut(rs.getInt("rut"));
+                pedido.setTicket(rs.getInt("ticket"));
+                pedido.setTotal(rs.getInt("total"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("El pedido buscado no existe");
+        }
+        return pedido;
     }
     
 }
