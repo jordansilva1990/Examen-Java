@@ -13,13 +13,17 @@ import java.io.Serializable;
  */
 public class PedidoDetalle implements Serializable{
     private int idPedidoDetalle;
+    private int ticket;
+    private int idProducto;
     private int cantidad;
 
     public PedidoDetalle() {
     }
 
-    public PedidoDetalle(int idPedidoDetalle, int cantidad) {
+    public PedidoDetalle(int idPedidoDetalle, int ticket, int idProducto, int cantidad) {
         this.idPedidoDetalle = idPedidoDetalle;
+        this.ticket = ticket;
+        this.idProducto = idProducto;
         this.cantidad = cantidad;
     }
 
@@ -29,6 +33,22 @@ public class PedidoDetalle implements Serializable{
 
     public void setIdPedidoDetalle(int idPedidoDetalle) {
         this.idPedidoDetalle = idPedidoDetalle;
+    }
+
+    public int getTicket() {
+        return ticket;
+    }
+
+    public void setTicket(int ticket) {
+        this.ticket = ticket;
+    }
+
+    public int getIdProducto() {
+        return idProducto;
+    }
+
+    public void setIdProducto(int idProducto) {
+        this.idProducto = idProducto;
     }
 
     public int getCantidad() {
@@ -42,7 +62,7 @@ public class PedidoDetalle implements Serializable{
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 31 * hash + this.idPedidoDetalle;
+        hash = 83 * hash + this.idPedidoDetalle;
         return hash;
     }
 
@@ -60,6 +80,6 @@ public class PedidoDetalle implements Serializable{
         }
         return true;
     }
-    
+
     
 }

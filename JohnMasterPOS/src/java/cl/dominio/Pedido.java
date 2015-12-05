@@ -13,16 +13,18 @@ import java.io.Serializable;
  */
 public class Pedido implements Serializable{
     private int ticket;
+    private int rut;
     private String medioPago;
-    private char agrandaBebidaPapas;
-    private char paraLlevar;
+    private byte agrandaBebidaPapas;
+    private byte paraLlevar;
     private int total;
 
     public Pedido() {
     }
 
-    public Pedido(int ticket, String medioPago, char agrandaBebidaPapas, char paraLlevar, int total) {
+    public Pedido(int ticket, int rut, String medioPago, byte agrandaBebidaPapas, byte paraLlevar, int total) {
         this.ticket = ticket;
+        this.rut = rut;
         this.medioPago = medioPago;
         this.agrandaBebidaPapas = agrandaBebidaPapas;
         this.paraLlevar = paraLlevar;
@@ -37,6 +39,14 @@ public class Pedido implements Serializable{
         this.ticket = ticket;
     }
 
+    public int getRut() {
+        return rut;
+    }
+
+    public void setRut(int rut) {
+        this.rut = rut;
+    }
+
     public String getMedioPago() {
         return medioPago;
     }
@@ -45,19 +55,19 @@ public class Pedido implements Serializable{
         this.medioPago = medioPago;
     }
 
-    public char getAgrandaBebidaPapas() {
+    public byte getAgrandaBebidaPapas() {
         return agrandaBebidaPapas;
     }
 
-    public void setAgrandaBebidaPapas(char agrandaBebidaPapas) {
+    public void setAgrandaBebidaPapas(byte agrandaBebidaPapas) {
         this.agrandaBebidaPapas = agrandaBebidaPapas;
     }
 
-    public char getParaLlevar() {
+    public byte getParaLlevar() {
         return paraLlevar;
     }
 
-    public void setParaLlevar(char paraLlevar) {
+    public void setParaLlevar(byte paraLlevar) {
         this.paraLlevar = paraLlevar;
     }
 
@@ -72,7 +82,7 @@ public class Pedido implements Serializable{
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 17 * hash + this.ticket;
+        hash = 61 * hash + this.ticket;
         return hash;
     }
 
@@ -90,7 +100,7 @@ public class Pedido implements Serializable{
         }
         return true;
     }
- 
+
     
     
 }
