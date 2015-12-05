@@ -15,14 +15,14 @@ public class Pedido implements Serializable{
     private int ticket;
     private int rut;
     private String medioPago;
-    private byte agrandaBebidaPapas;
-    private byte paraLlevar;
+    private boolean agrandaBebidaPapas;
+    private boolean paraLlevar;
     private int total;
 
     public Pedido() {
     }
 
-    public Pedido(int ticket, int rut, String medioPago, byte agrandaBebidaPapas, byte paraLlevar, int total) {
+    public Pedido(int ticket, int rut, String medioPago, boolean agrandaBebidaPapas, boolean paraLlevar, int total) {
         this.ticket = ticket;
         this.rut = rut;
         this.medioPago = medioPago;
@@ -55,19 +55,19 @@ public class Pedido implements Serializable{
         this.medioPago = medioPago;
     }
 
-    public byte getAgrandaBebidaPapas() {
+    public boolean getAgrandaBebidaPapas() {
         return agrandaBebidaPapas;
     }
 
-    public void setAgrandaBebidaPapas(byte agrandaBebidaPapas) {
+    public void setAgrandaBebidaPapas(boolean agrandaBebidaPapas) {
         this.agrandaBebidaPapas = agrandaBebidaPapas;
     }
 
-    public byte getParaLlevar() {
+    public boolean getParaLlevar() {
         return paraLlevar;
     }
 
-    public void setParaLlevar(byte paraLlevar) {
+    public void setParaLlevar(boolean paraLlevar) {
         this.paraLlevar = paraLlevar;
     }
 
