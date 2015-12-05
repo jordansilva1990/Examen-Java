@@ -10,6 +10,17 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <style>
+            table {
+                border-collapse: collapse;
+            }
+            table,th,td {
+                border: 1px solid black;
+            }
+            th,td{
+                padding: 5px;
+            }
+        </style>
         <title>JSP Page</title>
     </head>
     <body>
@@ -39,6 +50,39 @@
                                         </option>
                                     </c:forEach>
                     </select> <input type="submit" method="POST" value="Agregar" /> <c:out value="${mapMensajes['detallePedidoAgregar']}" />
+                </td>
+            </tr>
+            
+            <tr>
+                <td><input type="checkbox" name="agranda_bebida_papas" value="" /> Agranda bedida y papas</br>
+                    <input type="checkbox" name="pedido_llevar" value="" /> Pedido para llevar</br></br>
+                    Medio de Pago</br>
+                    <input type="radio" name="medio_pago"  value="" /> Efectivo</br>
+                    <input type="radio" name="medio_pago" value="" /> Tarjeta debito / credito</td>
+                <td>
+                    <table>
+                        <tr>
+                            <th><center>Producto</center></th>
+                            <th><center>Cantidad</center></th>
+                            <th></th>
+                        </tr>
+                        <c:forEach var="p" items="${lstProductoDetalle}">
+
+                        <tr>
+                            <td><c:out value="${p.producto.nombre}" /></td>
+                            <td><c:out value="${p.pedidoDetalle.cantidad}" /></td>
+                            <td>
+                                <c:url var="urlEliminar" value="/Controller">
+                                    <c:param name="codigoProducto" value="${param.id_pedido_detalle}" />
+                                </c:url>
+                                <form action="${urlEliminar}" method="post">
+                                    <input type="hidden" name="codigoProductoDEL" value="${p.id_pedido_detalle}" />
+                                    <input type="submit" value="-" />
+                                </form>
+                            </td>
+                        </tr>
+                        </c:forEach>
+                    </table>
                 </td>
             </tr>
         </table>
