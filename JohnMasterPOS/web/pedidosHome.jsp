@@ -45,7 +45,7 @@
                                     <option value="">(Seleccione)</option>
                                     <c:forEach var="p" items="${lsProducto}">
                                         <option value="${p.idProducto}" ${p.idProducto == producto.idProducto ? 'Selected' : ''}>
-                                            <c:out value="${p.nombre}"/>
+                                            <c:out value="${p.descripcion}"/>
                                         </option>
                                     </c:forEach>
                     </select> <input type="submit" method="POST" value="Agregar" /> <c:out value="${mapMensajes['detallePedidoAgregar']}" />

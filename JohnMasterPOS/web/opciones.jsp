@@ -12,8 +12,6 @@
     <a href="<c:url value="/ControllerAgregarPedido" />">Home</a></br>
     
     <a href="<c:url value="/ControllerMisPedidos" />">Mis Pedidos</a>
-    
-   
 
 </p>
 <hr />

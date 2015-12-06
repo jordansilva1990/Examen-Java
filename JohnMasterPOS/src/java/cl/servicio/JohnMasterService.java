@@ -5,8 +5,8 @@
  */
 package cl.servicio;
 
-import cl.Persistencia.ClienteDAO;
-import cl.Persistencia.ProductoDAO;
+import cl.persistencia.ClienteDAO;
+import cl.persistencia.ProductoDAO;
 import cl.dominio.Cliente;
 import cl.dominio.Pedido;
 import cl.dominio.PedidoDetalle;
