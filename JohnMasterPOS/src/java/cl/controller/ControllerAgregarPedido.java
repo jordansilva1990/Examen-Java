@@ -80,7 +80,7 @@ public class ControllerAgregarPedido extends HttpServlet {
                
                 
                  detalle.setIdProducto(Integer.parseInt(strIdProducto));
-                 detalle.setCantidad(Integer.parseInt(cantidad));
+                // detalle.setCantidad(Integer.parseInt(cantidad));
                  detalles.add(detalle);
                  
                  

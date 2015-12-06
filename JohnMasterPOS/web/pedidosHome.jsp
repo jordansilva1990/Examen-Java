@@ -36,8 +36,7 @@
                 <td><%@include file="opciones.jsp" %></td>
                 <td>Nombre: <input type="text" name="nombre" value="<c:out value="${cliente.nombre}" />" /> <c:out value="${mapMensajes['nombreCliente']}" /></br>
                     Rut   : <input type="text" name="rut" value="<c:out value="${cliente.rut}" />" /> <c:out value="${mapMensajes['rutCliente']}" /></td>
-            </tr>
-            
+            </tr>           
             <tr>
                 <td></td>
                 <td>Seleccione un producto o un combo, indique su cantidad y agregue al pedido </br>
