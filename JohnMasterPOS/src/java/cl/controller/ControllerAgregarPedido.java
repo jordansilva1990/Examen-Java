@@ -5,8 +5,13 @@
  */
 package cl.controller;
 
+import cl.dominio.Cliente;
+import cl.dominio.Producto;
+import cl.servicio.JohnMasterService;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.SQLException;
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,7 +27,7 @@ import javax.sql.DataSource;
 @WebServlet(name = "ControllerAgregarPedido", urlPatterns = {"/ControllerAgregarPedido"})
 public class ControllerAgregarPedido extends HttpServlet {
 
-    @Resource(mappedName = "jdbc/puntoventa")
+    @Resource(mappedName = "jdbc/johnmaster")
     private DataSource ds;
 
     
@@ -30,6 +35,20 @@ public class ControllerAgregarPedido extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+         try (Connection cnx = ds.getConnection()) {
+             
+            JohnMasterService service = new JohnMasterService(cnx);
+
+           
+            request.setAttribute("lsProducto", service.buscarTodosLosProductos());
+            
+
+            request.getRequestDispatcher("/pedidosHome.jsp").forward(request, response);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        
+        
         
     }
 

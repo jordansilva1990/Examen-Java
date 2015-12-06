@@ -1,4 +1,4 @@
-<%-- 
+3<%-- 
     Document   : index
     Created on : 04-12-2015, 23:13:49
     Author     : Jordan
@@ -33,8 +33,7 @@
             </tr>
 
             <tr>
-                <td><c:url value="/ControllerPedidosHome" /></br>
-                    <c:url value="/ControllerPedidosTicket" /></td>
+                <td><%@include file="opciones.jsp" %></td>
                 <td>Nombre: <input type="text" name="nombre" value="<c:out value="${cliente.nombre}" />" /> <c:out value="${mapMensajes['nombreCliente']}" /></br>
                     Rut   : <input type="text" name="rut" value="<c:out value="${cliente.rut}" />" /> <c:out value="${mapMensajes['rutCliente']}" /></td>
             </tr>

@@ -11,6 +11,9 @@ import java.util.List;
 public class ClienteDAO {
 
     private Connection cnx;
+    
+    
+    
 
     public ClienteDAO(Connection cnx) {
 
