@@ -56,6 +56,33 @@ public class PedidoDetalleDAO {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {                
                 PedidoDetalle pedidoDetalle = new PedidoDetalle();
+                pedidoDetalle.setTicket(rs.getInt("ticket"));
+                pedidoDetalle.setCantidad(rs.getInt("cantidad"));
+                pedidoDetalle.setIdPedidoDetalle(rs.getInt("id_pedido_detalle"));
+                pedidoDetalle.setIdProducto(rs.getInt("id_producto"));
+                
+                listado.add(pedidoDetalle);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al buscar los registros del detalle");
+        }
+        return listado;
+    }
+    
+    
+    
+    
+    public List<PedidoDetalle> buscarTodosXPedido(int ticket){
+        String sql = "select * from pedido_detalle where ticket = ? order by id_pedido_detalle";
+        ArrayList<PedidoDetalle> listado  = new ArrayList<>();
+        
+        try (PreparedStatement stmt = cnx.prepareStatement(sql)){
+            stmt.setInt(1, ticket);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) { 
+                
+                PedidoDetalle pedidoDetalle = new PedidoDetalle();
+                pedidoDetalle.setTicket(rs.getInt("ticket"));
                 pedidoDetalle.setCantidad(rs.getInt("cantidad"));
                 pedidoDetalle.setIdPedidoDetalle(rs.getInt("id_pedido_detalle"));
                 pedidoDetalle.setIdProducto(rs.getInt("id_producto"));

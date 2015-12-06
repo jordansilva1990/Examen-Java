@@ -48,6 +48,7 @@ public class PedidoDAO {
         }
     }
     
+    //busca pedidos por su ticket
     public Pedido buscar(int ticket)
     {
         String sql="select * from pedido where ticket = ?";
@@ -69,6 +70,8 @@ public class PedidoDAO {
         return pedido;
     }
     
+    
+    //busca todos los pedido correspondientes al rut ingresado
     public List<Pedido> buscarPedidosCliente(int rut)
     {
         List<Pedido> lista = new ArrayList();
@@ -95,4 +98,44 @@ public class PedidoDAO {
         
     }
     
+    
+    
+   //busca ultimo pedido ingresado buscando el ticket mas alto 
+   public Pedido buscarUltimo()
+   {
+       int max=0;
+        String sql = "select max(ticket) from pedido";
+        try (PreparedStatement stmt = cnx.prepareStatement(sql)) {
+            
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                     max=rs.getInt("max(ticket)");
+                }
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException("Error al Buscar el maximo numero de Ticket", ex);
+        }
+        
+        
+        Pedido pedido = new Pedido();
+        String sql2 = "select * from pedido where ticket  = ?";
+        try (PreparedStatement stmt = cnx.prepareStatement(sql2)) {
+            stmt.setInt(1, max);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                pedido.setAgrandaBebidaPapas(rs.getByte("agranda_bedida_papas"));
+                pedido.setMedioPago(rs.getString("medio_pago"));
+                pedido.setParaLlevar(rs.getByte("para_llevar"));
+                pedido.setRut(rs.getInt("rut"));
+                pedido.setTicket(rs.getInt("ticket"));
+                pedido.setTotal(rs.getInt("total"));
+                }
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException("Error al Buscar  la ultima venta", ex);
+        }
+        return pedido;
+        
+        
+   }
 }
