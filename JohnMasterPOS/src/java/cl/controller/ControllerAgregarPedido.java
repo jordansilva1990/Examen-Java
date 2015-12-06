@@ -6,6 +6,7 @@
 package cl.controller;
 
 import cl.dominio.Cliente;
+import cl.dominio.Pedido;
 import cl.dominio.PedidoDetalle;
 import cl.dominio.Producto;
 import cl.servicio.JohnMasterService;
@@ -43,8 +44,13 @@ public class ControllerAgregarPedido extends HttpServlet {
          try (Connection cnx = ds.getConnection()) {
              
             JohnMasterService service = new JohnMasterService(cnx);
-
+            Cliente cliente = new Cliente();
+            Producto producto = new Producto();
+            Pedido pedido = new Pedido();
            
+            request.setAttribute("producto", producto);
+            request.setAttribute("cliente", cliente);
+            request.setAttribute("pedido", pedido);
             request.setAttribute("lsProducto", service.buscarTodosLosProductos());
             
 
