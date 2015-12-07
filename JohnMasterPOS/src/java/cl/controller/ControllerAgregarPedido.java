@@ -43,50 +43,37 @@ public class ControllerAgregarPedido extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         try (Connection cnx = ds.getConnection()) {
+         //try (Connection cnx = ds.getConnection()) {
              
-            JohnMasterService service = new JohnMasterService(cnx);
-            Producto producto = new Producto();
-            String mensaje;
-             try {
+            //JohnMasterService service = new JohnMasterService(cnx);
+            //Producto producto = new Producto();
+            //String mensaje;
+            //try {
                      
                   //Init Pedido  
-                 pedido.setAgrandaBebidaPapas(Byte.parseByte("0"));
-                 pedido.setMedioPago(" ");
-                 pedido.setParaLlevar(Byte.parseByte("0"));
-                 pedido.setRut(00);
-                 pedido.setTotal(0);
+            //     pedido.setAgrandaBebidaPapas(Byte.parseByte("0"));
+            //     pedido.setMedioPago(" ");
+            //     pedido.setParaLlevar(Byte.parseByte("0"));
+            //     pedido.setRut(00);
+            //     pedido.setTotal(0);
                  
                  //Ingreso de Pedido y recarga del mismo desde BD con su ticket
-                 service.agregarPedido(pedido);
-                 pedido = service.buscarUltimoPedido();
+            //     service.agregarPedido(pedido);
+            //     pedido = service.buscarUltimoPedido();
                  
-                 
-                 
-                 
-                 
-                 
-                 
-                 
-                 
-                 
-                 
-                 } catch (ServicioException ex) {
-                    mensaje = ex.getMessage();
-                }
+            //     } catch (ServicioException ex) {
+            //        mensaje = ex.getMessage();
+            //    }
             
             
-            request.setAttribute("producto", producto);
-            request.setAttribute("lsProducto", service.buscarTodosLosProductos());
+            //request.setAttribute("producto", producto);
+            //request.setAttribute("lsProducto", service.buscarTodosLosProductos());
             
 
-            request.getRequestDispatcher("/pedidosHome.jsp").forward(request, response);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        
-        
-        
+            //request.getRequestDispatcher("/pedidosHome.jsp").forward(request, response);
+        //} catch (SQLException e) {
+        //    throw new RuntimeException(e);
+        //}
     }
 
     
@@ -119,13 +106,9 @@ public class ControllerAgregarPedido extends HttpServlet {
                 
                  PedidoDetalle detalle= new PedidoDetalle();
                  
-                 
-                 
-                     
-                 detalle.setTicket(pedido.getTicket());
+                 detalle.setTicket(service.buscarUltimoPedido().getTicket());
                  detalle.setIdProducto(Integer.parseInt(strIdProducto));
-                 detalle.setCantidad(Integer.parseInt(cantidad));
-                 
+                 //detalle.setCantidad(Integer.parseInt(cantidad));
                  
                  // se ingresa y recupera el detalle con su id
                  service.agregarDetallePedido(detalle);                 
@@ -133,24 +116,11 @@ public class ControllerAgregarPedido extends HttpServlet {
                  
                  // se trae el producto del detalle
                  producto= service.buscarUnProducto(detalle.getIdProducto());
-                 
-                 
+           
                  detalleProducto= new PedidoDetalleProductoDTO(detalle,producto);
-                 
-                 
                  
                  // se agrega el detalle junto al producto para luego mostrar en JSP
                  detallesproductos.add(detalleProducto);
-                 
-                 
-                 
-                 
-                 
-                 
-                 
-                 
-                 
-                 
                  
                 producto = service.buscarUnProducto(Integer.parseInt(strIdProducto)); 
                 
@@ -159,11 +129,7 @@ public class ControllerAgregarPedido extends HttpServlet {
                 
              }
             
-            
-            
-            
-            
-            request.setAttribute("lsProducto", service.buscarTodosLosProductos());
+            //request.setAttribute("lsProducto", service.buscarTodosLosProductos());
             request.setAttribute("lstProductoDetalle", service.buscarTodosLosDetallesPedidoProducto());
             request.setAttribute("lsProducto", service.buscarTodosLosProductos());
             

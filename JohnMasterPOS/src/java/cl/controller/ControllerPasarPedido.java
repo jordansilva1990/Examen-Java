@@ -1,0 +1,71 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package cl.controller;
+
+import cl.dominio.Pedido;
+import cl.servicio.JohnMasterService;
+import cl.servicio.ServicioException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.Resource;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
+
+/**
+ *
+ * @author Simon
+ */
+@WebServlet(name = "ControllerPasarPedido", urlPatterns = {"/ControllerPasarPedido"})
+public class ControllerPasarPedido extends HttpServlet {
+
+    @Resource(mappedName = "jdbc/johnmaster")
+    private DataSource ds;
+    
+
+    
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try (Connection cnx = ds.getConnection()){
+            JohnMasterService service = new JohnMasterService(cnx);
+            
+            Pedido pedido = new Pedido();
+            pedido.setAgrandaBebidaPapas(Byte.parseByte("0"));
+            pedido.setMedioPago(" ");
+            pedido.setParaLlevar(Byte.parseByte("0"));
+            pedido.setRut(0);
+            pedido.setTotal(0);
+            service.agregarPedido(pedido);
+            
+            request.setAttribute("lsProducto", service.buscarTodosLosProductos());
+            request.getRequestDispatcher("/pedidosHome.jsp").forward(request, response);
+            
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ServicioException ex) {
+            Logger.getLogger(ControllerPasarPedido.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+    }
+
+    
+
+}
