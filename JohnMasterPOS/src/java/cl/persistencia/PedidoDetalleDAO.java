@@ -5,6 +5,7 @@
  */
 package cl.persistencia;
 
+import cl.dominio.Pedido;
 import cl.dominio.PedidoDetalle;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -73,6 +74,7 @@ public class PedidoDetalleDAO {
     
     
     public List<PedidoDetalle> buscarTodosXPedido(int ticket){
+        
         String sql = "select * from pedido_detalle where ticket = ? order by id_pedido_detalle";
         ArrayList<PedidoDetalle> listado  = new ArrayList<>();
         
@@ -93,5 +95,43 @@ public class PedidoDetalleDAO {
             throw new RuntimeException("Error al buscar los registros del detalle");
         }
         return listado;
+    }
+    
+    
+    public PedidoDetalle buscarUltimoDetalle()
+    {
+        
+        PedidoDetalle detalle= new PedidoDetalle();
+       int max=0;
+        String sql = "select max(id_pedido_detalle) from pedido_detalle";
+        try (PreparedStatement stmt = cnx.prepareStatement(sql)) {
+            
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                     max=rs.getInt("max(id_pedido_detalle)");
+                }
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException("Error al Buscar el maximo id_pedido_detalle", ex);
+        }
+        
+        
+        Pedido pedido = new Pedido();
+        String sql2 = "select * from pedido_detalle where id_pedido_detalle  = ?";
+        try (PreparedStatement stmt = cnx.prepareStatement(sql2)) {
+            stmt.setInt(1, max);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                detalle.setTicket(rs.getInt("ticket"));
+                detalle.setIdPedidoDetalle(rs.getInt("id_pedido_detalle"));
+                detalle.setIdProducto(rs.getInt("id_producto"));
+                detalle.setCantidad(rs.getInt("cantidad"));
+                }
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException("Error al Buscar  la ultima venta", ex);
+        }
+        return detalle;
+        
     }
 }

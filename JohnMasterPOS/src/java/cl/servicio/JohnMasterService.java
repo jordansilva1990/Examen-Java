@@ -87,4 +87,12 @@ public class JohnMasterService {
     public List<PedidoDetalleProductoDTO> buscarTodosLosDetallesPedidoProducto(){
         return pedidoDetalleProductoDAO.buscarTodosLosPedidoDetalleProducto();
     }
+    public Pedido buscarUltimoPedido()
+    {
+        return pedidoDAO.buscarUltimo();
+    }
+    public PedidoDetalle buscarUltimoDetalle()
+    {
+       return pedidoDetalleDAO.buscarUltimoDetalle();
+    }
 }

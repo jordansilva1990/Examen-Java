@@ -9,7 +9,9 @@ import cl.dominio.Cliente;
 import cl.dominio.Pedido;
 import cl.dominio.PedidoDetalle;
 import cl.dominio.Producto;
+import cl.dto.PedidoDetalleProductoDTO;
 import cl.servicio.JohnMasterService;
+import cl.servicio.ServicioException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -37,7 +39,7 @@ public class ControllerAgregarPedido extends HttpServlet {
     private DataSource ds;
 
     
-    
+    private Pedido pedido;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -45,6 +47,34 @@ public class ControllerAgregarPedido extends HttpServlet {
              
             JohnMasterService service = new JohnMasterService(cnx);
             Producto producto = new Producto();
+            String mensaje;
+             try {
+                     
+                  //Init Pedido  
+                 pedido.setAgrandaBebidaPapas(Byte.parseByte("0"));
+                 pedido.setMedioPago(" ");
+                 pedido.setParaLlevar(Byte.parseByte("0"));
+                 pedido.setRut(00);
+                 pedido.setTotal(0);
+                 
+                 //Ingreso de Pedido y recarga del mismo desde BD con su ticket
+                 service.agregarPedido(pedido);
+                 pedido = service.buscarUltimoPedido();
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 } catch (ServicioException ex) {
+                    mensaje = ex.getMessage();
+                }
+            
             
             request.setAttribute("producto", producto);
             request.setAttribute("lsProducto", service.buscarTodosLosProductos());
@@ -63,30 +93,69 @@ public class ControllerAgregarPedido extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        String mensaje;
          try (Connection cnx = ds.getConnection()) {
             Map<String, String> mapMensajes = new HashMap<>();
             JohnMasterService service = new JohnMasterService(cnx);
-            //List<PedidoDetalle> detalles = new ArrayList<PedidoDetalle>();
+            
+            
+            PedidoDetalleProductoDTO detalleProducto = new PedidoDetalleProductoDTO ();
+            List<PedidoDetalleProductoDTO> detallesproductos = new ArrayList<PedidoDetalleProductoDTO>();
+            
             Producto producto = null;
+            
             //verifica si se selecciono algun producto
            String strIdProducto = request.getParameter("lsProducto");
              if (strIdProducto.isEmpty()) {
                 mapMensajes.put("lsProducto", "Tiene que seleccionar un producto para vender!!");
             } 
-             //String cantidad= request.getParameter("cantidad");
+             String cantidad= request.getParameter("cantidad");
             
+             
+            
+             
              if (mapMensajes.isEmpty()) {
+                
+                
+                 PedidoDetalle detalle= new PedidoDetalle();
+                 
+                 
+                 
+                     
+                 detalle.setTicket(pedido.getTicket());
+                 detalle.setIdProducto(Integer.parseInt(strIdProducto));
+                 detalle.setCantidad(Integer.parseInt(cantidad));
+                 
+                 
+                 // se ingresa y recupera el detalle con su id
+                 service.agregarDetallePedido(detalle);                 
+                 detalle= service.buscarUltimoDetalle();
+                 
+                 // se trae el producto del detalle
+                 producto= service.buscarUnProducto(detalle.getIdProducto());
+                 
+                 
+                 detalleProducto= new PedidoDetalleProductoDTO(detalle,producto);
+                 
+                 
+                 
+                 // se agrega el detalle junto al producto para luego mostrar en JSP
+                 detallesproductos.add(detalleProducto);
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
                  
                 producto = service.buscarUnProducto(Integer.parseInt(strIdProducto)); 
-                PedidoDetalle detalle= new PedidoDetalle();
-               
                 
-                detalle.setIdProducto(Integer.parseInt(strIdProducto));
-                detalle.setCantidad(1);
-                //detalle.setTicket(1);
-                //detalles.add(detalle);
-                service.agregarDetallePedido(detalle);
+                
+                
                 
              }
             
@@ -94,7 +163,7 @@ public class ControllerAgregarPedido extends HttpServlet {
             
             
             
-            
+            request.setAttribute("lsProducto", service.buscarTodosLosProductos());
             request.setAttribute("lstProductoDetalle", service.buscarTodosLosDetallesPedidoProducto());
             request.setAttribute("lsProducto", service.buscarTodosLosProductos());
             

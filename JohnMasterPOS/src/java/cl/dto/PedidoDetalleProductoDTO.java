@@ -16,6 +16,11 @@ public class PedidoDetalleProductoDTO {
     PedidoDetalle pedidoDetalleDTO;
     Producto productoDTO;
 
+    public PedidoDetalleProductoDTO() {
+    }
+
+    
+    
     public PedidoDetalleProductoDTO(PedidoDetalle pedidoDetalleDTO, Producto productoDTO) {
         this.pedidoDetalleDTO = pedidoDetalleDTO;
         this.productoDTO = productoDTO;
