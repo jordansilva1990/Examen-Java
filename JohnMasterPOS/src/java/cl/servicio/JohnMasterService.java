@@ -11,6 +11,7 @@ import cl.dominio.Cliente;
 import cl.dominio.Pedido;
 import cl.dominio.PedidoDetalle;
 import cl.dominio.Producto;
+import cl.dto.PedidoDetalleProductoDTO;
 import cl.persistencia.PedidoClienteDAO;
 import cl.persistencia.PedidoDAO;
 import cl.persistencia.PedidoDetalleDAO;
@@ -81,5 +82,9 @@ public class JohnMasterService {
     
     public List<PedidoDetalle> buscarTodosLosDetallesPedido(){
         return pedidoDetalleDAO.buscarTodos();
+    }
+    
+    public List<PedidoDetalleProductoDTO> buscarTodosLosDetallesPedidoProducto(){
+        return pedidoDetalleProductoDAO.buscarTodosLosPedidoDetalleProducto();
     }
 }

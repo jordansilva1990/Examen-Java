@@ -44,13 +44,9 @@ public class ControllerAgregarPedido extends HttpServlet {
          try (Connection cnx = ds.getConnection()) {
              
             JohnMasterService service = new JohnMasterService(cnx);
-            Cliente cliente = new Cliente();
             Producto producto = new Producto();
-            Pedido pedido = new Pedido();
-           
+            
             request.setAttribute("producto", producto);
-            request.setAttribute("cliente", cliente);
-            request.setAttribute("pedido", pedido);
             request.setAttribute("lsProducto", service.buscarTodosLosProductos());
             
 
@@ -71,25 +67,27 @@ public class ControllerAgregarPedido extends HttpServlet {
          try (Connection cnx = ds.getConnection()) {
             Map<String, String> mapMensajes = new HashMap<>();
             JohnMasterService service = new JohnMasterService(cnx);
-            List<PedidoDetalle> detalles = new ArrayList<PedidoDetalle>();
-            
+            //List<PedidoDetalle> detalles = new ArrayList<PedidoDetalle>();
+            Producto producto = null;
             //verifica si se selecciono algun producto
            String strIdProducto = request.getParameter("lsProducto");
              if (strIdProducto.isEmpty()) {
                 mapMensajes.put("lsProducto", "Tiene que seleccionar un producto para vender!!");
             } 
-             String cantidad= request.getParameter("cantidad");
+             //String cantidad= request.getParameter("cantidad");
             
              if (mapMensajes.isEmpty()) {
                  
+                producto = service.buscarUnProducto(Integer.parseInt(strIdProducto)); 
                 PedidoDetalle detalle= new PedidoDetalle();
                
                 
-                 detalle.setIdProducto(Integer.parseInt(strIdProducto));
-                // detalle.setCantidad(Integer.parseInt(cantidad));
-                 detalles.add(detalle);
-                 
-                 
+                detalle.setIdProducto(Integer.parseInt(strIdProducto));
+                detalle.setCantidad(1);
+                detalle.setTicket(1);
+                //detalles.add(detalle);
+                service.agregarDetallePedido(detalle);
+                
              }
             
             
@@ -97,7 +95,7 @@ public class ControllerAgregarPedido extends HttpServlet {
             
             
             
-            request.setAttribute("lstProductoDetalle", detalles);
+            request.setAttribute("lstProductoDetalle", service.buscarTodosLosDetallesPedidoProducto());
             request.setAttribute("lsProducto", service.buscarTodosLosProductos());
             
 

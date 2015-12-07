@@ -36,8 +36,10 @@
                 <td><%@include file="opciones.jsp" %></td>
                 <td>Nombre: <input type="text" name="nombre" value="<c:out value="${cliente.nombre}" />" /> <c:out value="${mapMensajes['nombreCliente']}" /></br>
                     Rut   : <input type="text" name="rut" value="<c:out value="${cliente.rut}" />" /> <c:out value="${mapMensajes['rutCliente']}" /></td>
-            </tr>           
-            <tr>
+            </tr>
+            
+            <form action="<c:url value="/ControllerAgregarPedido" />" method="post" >
+             <tr>
                 <td></td>
                 <td>Seleccione un producto o un combo, indique su cantidad y agregue al pedido </br>
                     <select class="dropdown-button btn" name="lsProducto" >
@@ -50,6 +52,7 @@
                     </select> <input type="submit" method="POST" value="Agregar" /> <c:out value="${mapMensajes['detallePedidoAgregar']}" />
                 </td>
             </tr>
+            </form>
             
             <tr>
                 <td><input type="checkbox" name="agranda_bebida_papas" value="" /> Agranda bedida y papas</br>
@@ -67,7 +70,7 @@
                         <c:forEach var="p" items="${lstProductoDetalle}">
 
                         <tr>
-                            <td><c:out value="${p.producto.nombre}" /></td>
+                            <td><c:out value="${p.producto.descripcion}" /></td>
                             <td><c:out value="${p.pedidoDetalle.cantidad}" /></td>
                             <td>
                                 <c:url var="urlEliminar" value="/Controller">
