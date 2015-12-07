@@ -84,7 +84,7 @@ public class ControllerAgregarPedido extends HttpServlet {
                 
                 detalle.setIdProducto(Integer.parseInt(strIdProducto));
                 detalle.setCantidad(1);
-                detalle.setTicket(1);
+                //detalle.setTicket(1);
                 //detalles.add(detalle);
                 service.agregarDetallePedido(detalle);
                 
