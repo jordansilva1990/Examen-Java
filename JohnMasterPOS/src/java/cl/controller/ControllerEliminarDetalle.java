@@ -63,11 +63,14 @@ public class ControllerEliminarDetalle extends HttpServlet {
                 
                 List<PedidoDetalleProductoDTO> detalles = service.buscarElDetalleDelPedido(service.buscarUltimoPedido());
                 
-                 if (detalles!=null) {
-                     for (PedidoDetalleProductoDTO x : detalles) {
-                   total+=  x.getPedidoDetalleDTO().getCantidad()*x.getProductoDTO().getValor();
+                 if (detalles!=null) 
+                 {
+                    for (PedidoDetalleProductoDTO x : detalles) 
+                    {
+                         total+=  x.getPedidoDetalleDTO().getCantidad()*x.getProductoDTO().getValor();
+                    }
                  }
-                 }
+                 
             
             
             request.setAttribute("total", total);

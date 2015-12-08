@@ -21,39 +21,35 @@ import java.util.List;
  * @author Jordan
  */
 public class PedidoDAO {
-    
+
     private Connection cnx;
 
     public PedidoDAO(Connection cnx) {
         this.cnx = cnx;
     }
-    
-    
-    
-    public void create(Pedido pe)
-    {
-        
-         String sql = "insert into pedido (rut,medio_pago,agranda_bebida_papas,para_llevar,total)"
-                 + "values(?,?,?,?,?)";
+
+    public void create(Pedido pe) {
+
+        String sql = "insert into pedido (rut,medio_pago,agranda_bebida_papas,para_llevar,total)"
+                + "values(?,?,?,?,?)";
         try (PreparedStatement stmt = cnx.prepareStatement(sql)) {
             stmt.setInt(1, pe.getRut());
             stmt.setString(2, pe.getMedioPago());
             stmt.setByte(3, pe.getAgrandaBebidaPapas());
             stmt.setByte(4, pe.getParaLlevar());
             stmt.setInt(5, pe.getTotal());
-                    
+
             int filasAfectadas = stmt.executeUpdate();
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             throw new RuntimeException("Error al Agregar Cliente", ex);
         }
     }
-    
+
     //busca pedidos por su ticket
-    public Pedido buscar(int ticket)
-    {
-        String sql="select * from pedido where ticket = ?";
+    public Pedido buscar(int ticket) {
+        String sql = "select * from pedido where ticket = ?";
         Pedido pedido = new Pedido();
-        try (PreparedStatement stmt = cnx.prepareStatement(sql)){
+        try (PreparedStatement stmt = cnx.prepareStatement(sql)) {
             stmt.setInt(1, ticket);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
@@ -69,16 +65,14 @@ public class PedidoDAO {
         }
         return pedido;
     }
-    
-    
+
     //busca todos los pedido correspondientes al rut ingresado
-    public List<Pedido> buscarPedidosCliente(int rut)
-    {
+    public List<Pedido> buscarPedidosCliente(int rut) {
         List<Pedido> lista = new ArrayList();
         String sql = "select * from pedido where rut=?";
-        Pedido pedido=null;
-        try (PreparedStatement stmt = cnx.prepareStatement(sql)){
-          stmt.setInt(1, rut);
+        Pedido pedido = null;
+        try (PreparedStatement stmt = cnx.prepareStatement(sql)) {
+            stmt.setInt(1, rut);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 pedido.setAgrandaBebidaPapas(rs.getByte("agranda_bedida_papas"));
@@ -87,36 +81,31 @@ public class PedidoDAO {
                 pedido.setRut(rs.getInt("rut"));
                 pedido.setTicket(rs.getInt("ticket"));
                 pedido.setTotal(rs.getInt("total"));
-                
+
                 lista.add(pedido);
             }
         } catch (SQLException e) {
             throw new RuntimeException("El pedido buscado no existe");
         }
         return lista;
-        
-        
+
     }
-    
-    
-    
-   //busca ultimo pedido ingresado buscando el ticket mas alto 
-   public int buscarUltimoTicket()
-   {
-       int max=0;
+
+    //busca ultimo pedido ingresado buscando el ticket mas alto 
+    public int buscarUltimoTicket() {
+        int max = 0;
         String sql = "select max(ticket) from pedido";
         try (PreparedStatement stmt = cnx.prepareStatement(sql)) {
-            
+
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                     max=rs.getInt("max(ticket)");
+                    max = rs.getInt("max(ticket)");
                 }
             }
         } catch (SQLException ex) {
             throw new RuntimeException("Error al Buscar el maximo numero de Ticket", ex);
         }
-        
-        
+
         //Pedido pedido = new Pedido();
         //String sql2 = "select * from pedido where ticket  = ?";
         //try (PreparedStatement stmt = cnx.prepareStatement(sql2)) {
@@ -135,7 +124,36 @@ public class PedidoDAO {
         //    throw new RuntimeException("Error al Buscar  la ultima venta", ex);
         //}
         return max;
+
+    }
+
+    public void actualizarAgrandado(int ticket, byte agrandado) {
+        Pedido pedido = buscar(ticket);
+
+        if (pedido.getParaLlevar() == 0 && agrandado == 1) {
+
+            String sql = "update pedido set agranda_bebidas_papas = ? where ticket = ?";
+            try (PreparedStatement stmt = cnx.prepareStatement(sql)) {
+                stmt.setByte(1, agrandado);
+                stmt.setInt(2, ticket);
+
+                stmt.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException("Error al actualizar + Agrandado");
+            }
+        }
         
-        
-   }
+        if (pedido.getParaLlevar() == 1 && agrandado == 0) {
+           String sql = "update pedido set agranda_bebidas_papas = ? where ticket = ?";
+            try (PreparedStatement stmt = cnx.prepareStatement(sql)) {
+                stmt.setByte(1, agrandado);
+                stmt.setInt(2, ticket);
+
+                stmt.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException("Error al actualizar + Agrandado");
+            } 
+        }
+
+    }
 }

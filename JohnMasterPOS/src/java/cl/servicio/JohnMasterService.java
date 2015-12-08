@@ -110,4 +110,8 @@ public class JohnMasterService {
     {
         pedidoDetalleDAO.eliminar2(pedidoDetalle);
     }
+    public void actualizarAgrandado(int ticket,byte agrandado)
+    {
+         pedidoDAO.actualizarAgrandado(ticket, agrandado);
+    }
 }

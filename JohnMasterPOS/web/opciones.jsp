@@ -14,4 +14,4 @@
     <a href="<c:url value="/ControllerMisPedidos" />">Mis Pedidos</a>
 
 </p>
-<hr />
+
