@@ -138,7 +138,7 @@ public class ControllerAgregarPedido extends HttpServlet {
                  }
                  }
                  
-                 
+                 int numtcket =detalle.getTicket();
                  String[] agranda= request.getParameterValues("agranda_bebida_papas");
                  if (agranda!=null) {
                    String checked="1";
