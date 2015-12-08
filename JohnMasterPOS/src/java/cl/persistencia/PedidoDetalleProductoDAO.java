@@ -43,7 +43,7 @@ public class PedidoDetalleProductoDAO {
                 PedidoDetalle pedidoDetalle = new PedidoDetalle();
                 pedidoDetalle.setCantidad(rs.getInt("ped.cantidad"));
                 pedidoDetalle.setIdPedidoDetalle(rs.getInt("ped.id_pedido_detalle"));
-                pedidoDetalle.setIdProducto(rs.getInt("ped.id_producto"));
+                pedidoDetalle.setIdProducto(rs.getInt("pro.id_producto"));
                 pedidoDetalle.setTicket(rs.getInt("ped.ticket"));
                 
                 lista.add(new PedidoDetalleProductoDTO(pedidoDetalle, producto));

@@ -106,7 +106,7 @@ public class ControllerAgregarPedido extends HttpServlet {
                 
                  PedidoDetalle detalle= new PedidoDetalle();
                  
-                 detalle.setTicket(service.buscarUltimoPedido().getTicket());
+                 detalle.setTicket(service.buscarUltimoPedido());
                  detalle.setIdProducto(Integer.parseInt(strIdProducto));
                  //detalle.setCantidad(Integer.parseInt(cantidad));
                  

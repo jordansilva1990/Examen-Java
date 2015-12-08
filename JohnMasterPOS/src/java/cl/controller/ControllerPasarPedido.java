@@ -5,6 +5,7 @@
  */
 package cl.controller;
 
+import cl.dominio.Cliente;
 import cl.dominio.Pedido;
 import cl.servicio.JohnMasterService;
 import cl.servicio.ServicioException;
@@ -41,11 +42,16 @@ public class ControllerPasarPedido extends HttpServlet {
         try (Connection cnx = ds.getConnection()){
             JohnMasterService service = new JohnMasterService(cnx);
             
+            Cliente cliente = new Cliente();
+            cliente.setNombre("vacio");
+            cliente.setRutCliente(1111);
+            service.agregarCliente(cliente);
+            
             Pedido pedido = new Pedido();
             pedido.setAgrandaBebidaPapas(Byte.parseByte("0"));
             pedido.setMedioPago(" ");
             pedido.setParaLlevar(Byte.parseByte("0"));
-            pedido.setRut(0);
+            pedido.setRut(cliente.getRutCliente());
             pedido.setTotal(0);
             service.agregarPedido(pedido);
             

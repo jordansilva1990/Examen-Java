@@ -45,7 +45,7 @@
                     <select class="dropdown-button btn" name="lsProducto" >
                                     <option value="">(Seleccione)</option>
                                     <c:forEach var="p" items="${lsProducto}">
-                                        <option value="${p.idProducto}" ${p.idProducto == producto.idProducto ? 'Selected' : ''}>
+                                        <option value="${p.idProducto}" ${p.idProducto == productoDTO.idProducto ? 'Selected' : ''}>
                                             <c:out value="${p.descripcion}"/>
                                         </option>
                                     </c:forEach>
@@ -70,14 +70,14 @@
                         <c:forEach var="p" items="${lstProductoDetalle}">
 
                         <tr>
-                            <td><c:out value="${p.producto.descripcion}" /></td>
-                            <td><c:out value="${p.pedidoDetalle.cantidad}" /></td>
+                            <td><c:out value="${p.productoDTO.descripcion}" /></td>
+                            <td><c:out value="${p.pedidoDetalleDTO.cantidad}" /></td>
                             <td>
                                 <c:url var="urlEliminar" value="/Controller">
                                     <c:param name="codigoProducto" value="${param.id_pedido_detalle}" />
                                 </c:url>
                                 <form action="${urlEliminar}" method="post">
-                                    <input type="hidden" name="codigoProductoDEL" value="${p.id_pedido_detalle}" />
+                                    <input type="hidden" name="codigoProductoDEL" value="${p.pedidoDetalleDTO.idPedidoDetalle}" />
                                     <input type="submit" value="-" />
                                 </form>
                             </td>

@@ -101,7 +101,7 @@ public class PedidoDAO {
     
     
    //busca ultimo pedido ingresado buscando el ticket mas alto 
-   public Pedido buscarUltimo()
+   public int buscarUltimoTicket()
    {
        int max=0;
         String sql = "select max(ticket) from pedido";
@@ -117,24 +117,24 @@ public class PedidoDAO {
         }
         
         
-        Pedido pedido = new Pedido();
-        String sql2 = "select * from pedido where ticket  = ?";
-        try (PreparedStatement stmt = cnx.prepareStatement(sql2)) {
-            stmt.setInt(1, max);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                pedido.setAgrandaBebidaPapas(rs.getByte("agranda_bedida_papas"));
-                pedido.setMedioPago(rs.getString("medio_pago"));
-                pedido.setParaLlevar(rs.getByte("para_llevar"));
-                pedido.setRut(rs.getInt("rut"));
-                pedido.setTicket(rs.getInt("ticket"));
-                pedido.setTotal(rs.getInt("total"));
-                }
-            }
-        } catch (SQLException ex) {
-            throw new RuntimeException("Error al Buscar  la ultima venta", ex);
-        }
-        return pedido;
+        //Pedido pedido = new Pedido();
+        //String sql2 = "select * from pedido where ticket  = ?";
+        //try (PreparedStatement stmt = cnx.prepareStatement(sql2)) {
+        //    stmt.setInt(1, max);
+        //    try (ResultSet rs = stmt.executeQuery()) {
+        //        if (rs.next()) {
+        //        pedido.setAgrandaBebidaPapas(rs.getByte("agranda_bedida_papas"));
+        //        pedido.setMedioPago(rs.getString("medio_pago"));
+        //        pedido.setParaLlevar(rs.getByte("para_llevar"));
+        //        pedido.setRut(rs.getInt("rut"));
+        //        pedido.setTicket(rs.getInt("ticket"));
+        //        pedido.setTotal(rs.getInt("total"));
+        //        }
+        //    }
+        //} catch (SQLException ex) {
+        //    throw new RuntimeException("Error al Buscar  la ultima venta", ex);
+        //}
+        return max;
         
         
    }
