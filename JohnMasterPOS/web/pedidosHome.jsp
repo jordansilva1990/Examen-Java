@@ -55,8 +55,8 @@
             </form>
             
             <tr>
-                <td><input type="checkbox" name="agranda_bebida_papas" value="" /> Agranda bedida y papas</br>
-                    <input type="checkbox" name="pedido_llevar" value="" /> Pedido para llevar</br></br>
+                <td><input type="checkbox" name="agranda_bebida_papas" value="1" /> Agranda bedida y papas</br>
+                    <input type="checkbox" name="pedido_llevar" value="1" /> Pedido para llevar</br></br>
                     Medio de Pago</br>
                     <input type="radio" name="medio_pago"  value="" /> Efectivo</br>
                     <input type="radio" name="medio_pago" value="" /> Tarjeta debito / credito</td>

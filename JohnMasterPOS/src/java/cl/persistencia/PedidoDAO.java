@@ -127,8 +127,9 @@ public class PedidoDAO {
 
     }
 
-    public void actualizarAgrandado(int ticket, byte agrandado) {
+    public int actualizarAgrandado(int ticket, byte agrandado) {
         Pedido pedido = buscar(ticket);
+        int recargo=0;
 
         if (agrandado == 1) {
             if (pedido.getAgrandaBebidaPapas() == agrandado) {
@@ -157,10 +158,17 @@ public class PedidoDAO {
 
                     stmt.executeUpdate();
                 } catch (SQLException e) {
-                    throw new RuntimeException("Error al actualizar + Agrandado");
+                    throw new RuntimeException("Error al actualizar - Agrandado");
                 }
             }
         }
 
+        Pedido pedi = buscar(ticket);
+        
+        if (pedi.getAgrandaBebidaPapas()==1) {
+            recargo=990;
+        }
+        
+       return recargo; 
     }
 }

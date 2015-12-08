@@ -71,6 +71,13 @@ public class ControllerEliminarDetalle extends HttpServlet {
                     }
                  }
                  
+                 
+                 String agranda= request.getParameter("agranda_bebida_papas");
+                 if (agranda!=null) {
+                   String checked="1";
+                    total+= service.actualizarAgrandado(detalleProducto.getTicket(), Byte.parseByte(checked));
+                  
+                 }
             
             
             request.setAttribute("total", total);

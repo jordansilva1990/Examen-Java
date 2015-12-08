@@ -137,7 +137,16 @@ public class ControllerAgregarPedido extends HttpServlet {
                    total+=  x.getPedidoDetalleDTO().getCantidad()*x.getProductoDTO().getValor();
                  }
                  }
-                
+                 
+                 
+                 String agranda= request.getParameter("agranda_bebida_papas");
+                 if (agranda!=null) {
+                   String checked="1";
+                    total+= service.actualizarAgrandado(detalle.getTicket(), Byte.parseByte(checked));
+                  
+                 }
+                 
+            
                 
                 
                 

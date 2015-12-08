@@ -1,6 +1,6 @@
 <%-- 
-    Document   : resumenPedido
-    Created on : 06-12-2015, 21:13:42
+    Document   : misPedidos
+    Created on : 08-12-2015, 17:57:01
     Author     : Jordan
 --%>
 
@@ -9,9 +9,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Resumen de su Pedido</title>
+        <title>JSP Page</title>
     </head>
     <body>
-        
+        <h1>Hello World!</h1>
     </body>
 </html>
