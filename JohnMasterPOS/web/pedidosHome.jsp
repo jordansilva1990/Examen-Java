@@ -86,7 +86,11 @@
                     </table>
                 </td>
             </tr>
+            <tr>
+                <td><h2>Total: $ <c:out value="${total}"/></h2></td>
+                <td>Aqui va un boton</td>
+            </tr>
         </table>
-                <c:out value="${total}"/>
+                
     </body>
 </html>
