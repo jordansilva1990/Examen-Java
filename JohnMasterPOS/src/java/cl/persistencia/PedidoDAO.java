@@ -130,29 +130,36 @@ public class PedidoDAO {
     public void actualizarAgrandado(int ticket, byte agrandado) {
         Pedido pedido = buscar(ticket);
 
-        if (pedido.getParaLlevar() == 0 && agrandado == 1) {
+        if (agrandado == 1) {
+            if (pedido.getAgrandaBebidaPapas() == agrandado) {
+                //Si son iguales no tiene q hacer nada.
+            }else{
+                String sql = "update pedido set agranda_bebidas_papas = ? where ticket = ?";
+                try (PreparedStatement stmt = cnx.prepareStatement(sql)) {
+                    stmt.setByte(1, agrandado);
+                    stmt.setInt(2, ticket);
 
-            String sql = "update pedido set agranda_bebidas_papas = ? where ticket = ?";
-            try (PreparedStatement stmt = cnx.prepareStatement(sql)) {
-                stmt.setByte(1, agrandado);
-                stmt.setInt(2, ticket);
-
-                stmt.executeUpdate();
-            } catch (SQLException e) {
-                throw new RuntimeException("Error al actualizar + Agrandado");
-            }
+                    stmt.executeUpdate();
+                } catch (SQLException e) {
+                    throw new RuntimeException("Error al actualizar + Agrandado");
+                }
+            }    
         }
         
-        if (pedido.getParaLlevar() == 1 && agrandado == 0) {
-           String sql = "update pedido set agranda_bebidas_papas = ? where ticket = ?";
-            try (PreparedStatement stmt = cnx.prepareStatement(sql)) {
-                stmt.setByte(1, agrandado);
-                stmt.setInt(2, ticket);
+        if (agrandado == 0) {
+            if (pedido.getAgrandaBebidaPapas() == agrandado) {
+                //Si son iguales no tiene q hacer nada.
+            }else{
+                String sql = "update pedido set agranda_bebidas_papas = ? where ticket = ?";
+                try (PreparedStatement stmt = cnx.prepareStatement(sql)) {
+                    stmt.setByte(1, agrandado);
+                    stmt.setInt(2, ticket);
 
-                stmt.executeUpdate();
-            } catch (SQLException e) {
-                throw new RuntimeException("Error al actualizar + Agrandado");
-            } 
+                    stmt.executeUpdate();
+                } catch (SQLException e) {
+                    throw new RuntimeException("Error al actualizar + Agrandado");
+                }
+            }
         }
 
     }
