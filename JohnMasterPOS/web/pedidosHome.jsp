@@ -87,5 +87,6 @@
                 </td>
             </tr>
         </table>
+                <c:out value="${total}"/>
     </body>
 </html>

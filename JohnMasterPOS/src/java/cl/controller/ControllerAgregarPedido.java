@@ -84,6 +84,7 @@ public class ControllerAgregarPedido extends HttpServlet {
          try (Connection cnx = ds.getConnection()) {
             Map<String, String> mapMensajes = new HashMap<>();
             JohnMasterService service = new JohnMasterService(cnx);
+            int total=0;
             
             
             PedidoDetalleProductoDTO detalleProducto = new PedidoDetalleProductoDTO ();
@@ -127,9 +128,21 @@ public class ControllerAgregarPedido extends HttpServlet {
                 
                 
                 
+                // calculo de total en tiempo real
+                
+                List<PedidoDetalleProductoDTO> detalles = service.buscarElDetalleDelPedido(service.buscarUltimoPedido());
+                
+                 if (detalles!=null) {
+                     for (PedidoDetalleProductoDTO x : detalles) {
+                   total+=  x.getPedidoDetalleDTO().getCantidad()*x.getProductoDTO().getValor();
+                 }
+                 }
+                
+                
+                
                 
              }
-            
+             request.setAttribute("total", total);
             //request.setAttribute("lsProducto", service.buscarTodosLosProductos());
             //request.setAttribute("lstProductoDetalle", service.buscarTodosLosDetallesPedidoProducto());
              request.setAttribute("lstProductoDetalle", service.buscarElDetalleDelPedido(service.buscarUltimoPedido()));

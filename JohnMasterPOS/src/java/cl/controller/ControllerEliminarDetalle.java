@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -41,7 +42,7 @@ public class ControllerEliminarDetalle extends HttpServlet {
         try (Connection cnx = ds.getConnection()){
             JohnMasterService service = new JohnMasterService(cnx);
             PedidoDetalle detalleProducto = new PedidoDetalle ();
-            
+            int total=0;
             
             
             
@@ -50,16 +51,26 @@ public class ControllerEliminarDetalle extends HttpServlet {
             String codDetalleDel = request.getParameter("codigoProductoDEL");
             
             if (codDetalleDel != null) {
-                
-                
+  
                 int codigoDet= Integer.parseInt(codDetalleDel);
                 detalleProducto= service.buscarUnDetalle(codigoDet); 
-                
-                
+
                 service.rebajarCantidadDetalle(detalleProducto);
             }
             
             
+             // calculo de total en tiempo real
+                
+                List<PedidoDetalleProductoDTO> detalles = service.buscarElDetalleDelPedido(service.buscarUltimoPedido());
+                
+                 if (detalles!=null) {
+                     for (PedidoDetalleProductoDTO x : detalles) {
+                   total+=  x.getPedidoDetalleDTO().getCantidad()*x.getProductoDTO().getValor();
+                 }
+                 }
+            
+            
+            request.setAttribute("total", total);
                //se repite DoGet de Pasar Pedido
             request.setAttribute("lsProducto", service.buscarTodosLosProductos());
             
