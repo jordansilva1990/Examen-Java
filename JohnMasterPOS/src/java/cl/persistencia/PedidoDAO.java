@@ -35,8 +35,8 @@ public class PedidoDAO {
         try (PreparedStatement stmt = cnx.prepareStatement(sql)) {
             stmt.setInt(1, pe.getRut());
             stmt.setString(2, pe.getMedioPago());
-            stmt.setByte(3, pe.getAgrandaBebidaPapas());
-            stmt.setByte(4, pe.getParaLlevar());
+            stmt.setInt(3, pe.getAgrandaBebidaPapas());
+            stmt.setInt(4, pe.getParaLlevar());
             stmt.setInt(5, pe.getTotal());
 
             int filasAfectadas = stmt.executeUpdate();
@@ -53,12 +53,14 @@ public class PedidoDAO {
             stmt.setInt(1, ticket);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                pedido.setAgrandaBebidaPapas(rs.getByte("agranda_bedida_papas"));
-                pedido.setMedioPago(rs.getString("medio_pago"));
-                pedido.setParaLlevar(rs.getByte("para_llevar"));
                 pedido.setRut(rs.getInt("rut"));
                 pedido.setTicket(rs.getInt("ticket"));
                 pedido.setTotal(rs.getInt("total"));
+                pedido.setAgrandaBebidaPapas(rs.getByte("agranda_bebida_papas"));
+                pedido.setMedioPago(rs.getString("medio_pago"));
+                pedido.setParaLlevar(rs.getByte("para_llevar"));
+                
+                
             }
         } catch (SQLException e) {
             throw new RuntimeException("El pedido buscado no existe");
@@ -135,7 +137,7 @@ public class PedidoDAO {
             if (pedido.getAgrandaBebidaPapas() == agrandado) {
                 //Si son iguales no tiene q hacer nada.
             }else{
-                String sql = "update pedido set agranda_bebidas_papas = ? where ticket = ?";
+                String sql = "update pedido set agranda_bebida_papas = ? where ticket = ?";
                 try (PreparedStatement stmt = cnx.prepareStatement(sql)) {
                     stmt.setByte(1, agrandado);
                     stmt.setInt(2, ticket);
@@ -151,7 +153,7 @@ public class PedidoDAO {
             if (pedido.getAgrandaBebidaPapas() == agrandado) {
                 //Si son iguales no tiene q hacer nada.
             }else{
-                String sql = "update pedido set agranda_bebidas_papas = ? where ticket = ?";
+                String sql = "update pedido set agranda_bebida_papas = ? where ticket = ?";
                 try (PreparedStatement stmt = cnx.prepareStatement(sql)) {
                     stmt.setByte(1, agrandado);
                     stmt.setInt(2, ticket);
