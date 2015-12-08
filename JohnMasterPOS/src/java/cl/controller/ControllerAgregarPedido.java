@@ -96,7 +96,7 @@ public class ControllerAgregarPedido extends HttpServlet {
              if (strIdProducto.isEmpty()) {
                 mapMensajes.put("lsProducto", "Tiene que seleccionar un producto para vender!!");
             } 
-             String cantidad= request.getParameter("cantidad");
+             //String cantidad= request.getParameter("cantidad");
             
              
             
@@ -108,7 +108,8 @@ public class ControllerAgregarPedido extends HttpServlet {
                  
                  detalle.setTicket(service.buscarUltimoPedido());
                  detalle.setIdProducto(Integer.parseInt(strIdProducto));
-                 //detalle.setCantidad(Integer.parseInt(cantidad));
+                 
+                 detalle.setCantidad(1);
                  
                  // se ingresa y recupera el detalle con su id
                  service.agregarDetallePedido(detalle);                 

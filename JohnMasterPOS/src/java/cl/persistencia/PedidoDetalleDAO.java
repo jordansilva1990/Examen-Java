@@ -28,12 +28,14 @@ public class PedidoDetalleDAO {
     public void agregar(PedidoDetalle pedidoDetalle){
         String sql = "select * from pedido_detalle where id_producto = ? and ticket = ?";
         boolean bifurcador = false;
+        int cantidad = 0;
         try (PreparedStatement stmt = cnx.prepareStatement(sql)){
             stmt.setInt(2, pedidoDetalle.getTicket());
             stmt.setInt(1, pedidoDetalle.getIdProducto());
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 bifurcador = true;
+                cantidad = rs.getInt("cantidad");
             }
         } catch (SQLException e) {
             throw new RuntimeException("Error al buscar un detalle en particular");
@@ -42,7 +44,7 @@ public class PedidoDetalleDAO {
         if (bifurcador) {
             sql = "update pedido_detalle set cantidad = ? where id_producto = ? and ticket = ?";
             try (PreparedStatement stmt = cnx.prepareStatement(sql)){
-                stmt.setInt(1, pedidoDetalle.getCantidad()+1);
+                stmt.setInt(1, cantidad+1);
                 stmt.setInt(2, pedidoDetalle.getIdProducto());
                 stmt.setInt(3, pedidoDetalle.getTicket());
                 
