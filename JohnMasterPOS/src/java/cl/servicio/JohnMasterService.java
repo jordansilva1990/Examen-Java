@@ -101,4 +101,13 @@ public class JohnMasterService {
     public List<PedidoDetalleProductoDTO> buscarElDetalleDelPedido(int ticket){
         return pedidoDetalleProductoDAO.buscarPedidoDetallePorPedido(ticket);
     }
+    public PedidoDetalle buscarUnDetalle(int idpedido)
+    {
+        return pedidoDetalleDAO.buscarUnDetalle(idpedido);
+    }
+    
+    public void rebajarCantidadDetalle(PedidoDetalle pedidoDetalle)
+    {
+        pedidoDetalleDAO.eliminar2(pedidoDetalle);
+    }
 }

@@ -73,7 +73,7 @@
                             <td><c:out value="${p.productoDTO.descripcion}" /></td>
                             <td><c:out value="${p.pedidoDetalleDTO.cantidad}" /></td>
                             <td>
-                                <c:url var="urlEliminar" value="/Controller">
+                                <c:url var="urlEliminar" value="/ControllerEliminarDetalle">
                                     <c:param name="codigoProducto" value="${param.id_pedido_detalle}" />
                                 </c:url>
                                 <form action="${urlEliminar}" method="post">
