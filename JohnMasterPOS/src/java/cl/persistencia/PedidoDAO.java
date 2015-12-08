@@ -148,7 +148,7 @@ public class PedidoDAO {
                 }
             }    
         }
-        //asd
+       
         if (agrandado == 0) {
             if (pedido.getAgrandaBebidaPapas() == agrandado) {
                 //Si son iguales no tiene q hacer nada.

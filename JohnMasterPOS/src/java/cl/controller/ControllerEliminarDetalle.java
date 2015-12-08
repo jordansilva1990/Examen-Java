@@ -1,6 +1,6 @@
-
 package cl.controller;
 
+import cl.dominio.Pedido;
 import cl.dominio.PedidoDetalle;
 import cl.dto.PedidoDetalleProductoDTO;
 import cl.servicio.JohnMasterService;
@@ -27,7 +27,6 @@ public class ControllerEliminarDetalle extends HttpServlet {
     @Resource(mappedName = "jdbc/johnmaster")
     private DataSource ds;
 
-   
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -37,69 +36,54 @@ public class ControllerEliminarDetalle extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
-        try (Connection cnx = ds.getConnection()){
+
+        try (Connection cnx = ds.getConnection()) {
             JohnMasterService service = new JohnMasterService(cnx);
-            PedidoDetalle detalleProducto = new PedidoDetalle ();
-            int total=0;
-            
-            
-            
-            
-            
+            PedidoDetalle detalleProducto = new PedidoDetalle();
+            int total = 0;
+
             String codDetalleDel = request.getParameter("codigoProductoDEL");
-            
+
             if (codDetalleDel != null) {
-  
-                int codigoDet= Integer.parseInt(codDetalleDel);
-                detalleProducto= service.buscarUnDetalle(codigoDet); 
+
+                int codigoDet = Integer.parseInt(codDetalleDel);
+                detalleProducto = service.buscarUnDetalle(codigoDet);
 
                 service.rebajarCantidadDetalle(detalleProducto);
             }
-            
-            
+
              // calculo de total en tiempo real
-                
-                List<PedidoDetalleProductoDTO> detalles = service.buscarElDetalleDelPedido(service.buscarUltimoPedido());
-                
-                 if (detalles!=null) 
-                 {
-                    for (PedidoDetalleProductoDTO x : detalles) 
-                    {
-                         total+=  x.getPedidoDetalleDTO().getCantidad()*x.getProductoDTO().getValor();
-                    }
-                 }
-                 
-                 
-                 String agranda= request.getParameter("agranda_bebida_papas");
-                 if (agranda!=null) {
-                   String checked="1";
-                    total+= service.actualizarAgrandado(detalleProducto.getTicket(), Byte.parseByte(checked));
-                  
-                 }
-            
-            
+            List<PedidoDetalleProductoDTO> detalles = service.buscarElDetalleDelPedido(service.buscarUltimoPedido());
+
+            if (detalles != null) {
+                for (PedidoDetalleProductoDTO x : detalles) {
+                    total += x.getPedidoDetalleDTO().getCantidad() * x.getProductoDTO().getValor();
+                }
+            }
+
+            String[] agranda = request.getParameterValues("agranda_bebida_papas");
+            if (agranda != null) {
+                String checked = "1";
+                service.actualizarAgrandado(detalleProducto.getTicket(), Byte.parseByte(checked));
+
+            }
+            Pedido pedidox = service.buscarUnPedido(detalleProducto.getTicket());
+            if (pedidox.getAgrandaBebidaPapas() == 1) {
+                total += 990;
+            }
+
             request.setAttribute("total", total);
-               //se repite DoGet de Pasar Pedido
+            //se repite DoGet de Pasar Pedido
             request.setAttribute("lsProducto", service.buscarTodosLosProductos());
-            
+
             // se repite DoGet de Agregar Pedido para obtener los detalles           
-             request.setAttribute("lstProductoDetalle", service.buscarElDetalleDelPedido(service.buscarUltimoPedido()));
+            request.setAttribute("lstProductoDetalle", service.buscarElDetalleDelPedido(service.buscarUltimoPedido()));
             request.setAttribute("lsProducto", service.buscarTodosLosProductos());
-            
+
             request.getRequestDispatcher("/pedidosHome.jsp").forward(request, response);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
     }
 }
