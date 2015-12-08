@@ -26,15 +26,41 @@ public class PedidoDetalleDAO {
     }
     
     public void agregar(PedidoDetalle pedidoDetalle){
-        String sql = "insert into pedido_detalle (ticket, id_producto, cantidad) values(?,?,?)";
+        String sql = "select * from pedido_detalle where id_producto = ? and ticket = ?";
+        boolean bifurcador = false;
         try (PreparedStatement stmt = cnx.prepareStatement(sql)){
-            stmt.setInt(1, pedidoDetalle.getTicket());
-            stmt.setInt(2, pedidoDetalle.getIdProducto());
-            stmt.setInt(3, pedidoDetalle.getCantidad());
-            
-            stmt.executeUpdate();
+            stmt.setInt(2, pedidoDetalle.getTicket());
+            stmt.setInt(1, pedidoDetalle.getIdProducto());
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                bifurcador = true;
+            }
         } catch (SQLException e) {
-            throw new RuntimeException("Error al agregar el detalle al pedido!!");
+            throw new RuntimeException("Error al buscar un detalle en particular");
+        }
+        
+        if (bifurcador) {
+            sql = "update pedido_detalle set cantidad = ? where id_producto = ? and ticket = ?";
+            try (PreparedStatement stmt = cnx.prepareStatement(sql)){
+                stmt.setInt(1, pedidoDetalle.getCantidad()+1);
+                stmt.setInt(2, pedidoDetalle.getIdProducto());
+                stmt.setInt(3, pedidoDetalle.getTicket());
+                
+                stmt.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException("Error al actualizar la cantidad de un detalle");
+            }
+        }else{
+            sql = "insert into pedido_detalle (ticket, id_producto, cantidad) values(?,?,?)";
+                try (PreparedStatement stmt = cnx.prepareStatement(sql)){
+                    stmt.setInt(1, pedidoDetalle.getTicket());
+                    stmt.setInt(2, pedidoDetalle.getIdProducto());
+                    stmt.setInt(3, pedidoDetalle.getCantidad());
+            
+                    stmt.executeUpdate();
+                } catch (SQLException e) {
+                    throw new RuntimeException("Error al agregar el detalle al pedido!!");
+                }
         }
     }
     
