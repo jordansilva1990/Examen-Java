@@ -53,4 +53,33 @@ public class PedidoDetalleProductoDAO {
         }
         return lista;
     }
+    
+    public List<PedidoDetalleProductoDTO> buscarPedidoDetallePorPedido(int id_pedido){
+        List<PedidoDetalleProductoDTO> lista = new ArrayList<>();
+        String sql = "select * from producto pro join pedido_detalle ped using(id_producto) where ped.ticket = ? order by ped.id_pedido_detalle";
+        
+        try (PreparedStatement stmt = cnx.prepareStatement(sql)){
+            stmt.setInt(1, id_pedido);
+            ResultSet rs = stmt.executeQuery();
+            
+            while (rs.next()) {                
+                Producto producto = new Producto();
+                producto.setDescripcion(rs.getString("pro.descripcion"));
+                producto.setIdProducto(rs.getInt("pro.id_producto"));
+                producto.setValor(rs.getInt("pro.valor"));
+                
+                PedidoDetalle pedidoDetalle = new PedidoDetalle();
+                pedidoDetalle.setCantidad(rs.getInt("ped.cantidad"));
+                pedidoDetalle.setIdPedidoDetalle(rs.getInt("ped.id_pedido_detalle"));
+                pedidoDetalle.setIdProducto(rs.getInt("pro.id_producto"));
+                pedidoDetalle.setTicket(rs.getInt("ped.ticket"));
+                
+                lista.add(new PedidoDetalleProductoDTO(pedidoDetalle, producto));
+            }
+            
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al cargar el detalle del pedido");
+        }
+        return lista;
+    }
 }

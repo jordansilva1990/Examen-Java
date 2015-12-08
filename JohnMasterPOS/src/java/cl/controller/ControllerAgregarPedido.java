@@ -130,7 +130,8 @@ public class ControllerAgregarPedido extends HttpServlet {
              }
             
             //request.setAttribute("lsProducto", service.buscarTodosLosProductos());
-            request.setAttribute("lstProductoDetalle", service.buscarTodosLosDetallesPedidoProducto());
+            //request.setAttribute("lstProductoDetalle", service.buscarTodosLosDetallesPedidoProducto());
+             request.setAttribute("lstProductoDetalle", service.buscarElDetalleDelPedido(service.buscarUltimoPedido()));
             request.setAttribute("lsProducto", service.buscarTodosLosProductos());
             
 
