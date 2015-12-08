@@ -52,7 +52,6 @@
                     </select> <input type="submit" method="POST" value="Agregar" /> <c:out value="${mapMensajes['detallePedidoAgregar']}" />
                 </td>
             </tr>
-            </form>
             
             <tr>
                 <td><input type="checkbox" name="agranda_bebida_papas" value="1" /> Agranda bedida y papas</br>
@@ -60,7 +59,8 @@
                     Medio de Pago</br>
                     <input type="radio" name="medio_pago"  value="" /> Efectivo</br>
                     <input type="radio" name="medio_pago" value="" /> Tarjeta debito / credito</td>
-                <td>
+                <td>            </form>
+
                     <table>
                         <tr>
                             <th><center>Producto</center></th>
