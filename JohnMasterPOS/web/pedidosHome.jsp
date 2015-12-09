@@ -21,7 +21,7 @@
                 padding: 5px;
             }
         </style>
-        <title>JSP Page</title>
+        <title>John Master POS</title>
     </head>
     <body>
         <table>

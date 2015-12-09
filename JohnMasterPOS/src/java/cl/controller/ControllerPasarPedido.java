@@ -69,71 +69,18 @@ public class ControllerPasarPedido extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        /*
-         try (Connection cnx = ds.getConnection()){
-         JohnMasterService service = new JohnMasterService(cnx);
-         Map<String, String> mapMensajes = new HashMap<>();
-         Pedido pedido = null;
-         Cliente cliente = new Cliente();
+        try (Connection cnx = ds.getConnection()){
+            JohnMasterService service = new JohnMasterService(cnx);
+            Pedido pedido = service.buscarUnPedido(service.buscarUltimoPedido());
+            Cliente cliente = service.buscarUnCliente(pedido.getRut());
             
-         String nombre =request.getParameter("nombre");
-         if (nombre.isEmpty()) {
-         mapMensajes.put("nombre_cli", "Debe Ingresar Nombre!!");
-         }else
-         {
-         cliente.setNombre(nombre);
-         }
+            request.setAttribute("cliente", cliente);
+            request.setAttribute("pedido", pedido);
             
-         String strRut =request.getParameter("rut");
-         if (strRut.isEmpty()) {
-         mapMensajes.put("rut_cli", "Debe Ingresar Rut");
-         }else
-         {
-         cliente.setRutCliente(Integer.parseInt(strRut));
-         }
-            
-            
-         //
-         if (mapMensajes.isEmpty()) {
-                 
-         service.agregarCliente(cliente);
-           
-            
-           
-         pedido = service.buscarUnPedido(service.buscarUltimoPedido());
-         pedido.setRut(Integer.parseInt(strRut));
-         pedido.setMedioPago("test");
-         pedido.setParaLlevar(Byte.parseByte("1"));
-           
-            
-            
-            
-            
-            
-            
-         service.modificarPedido(pedido);
-         }
-           
-            
-         // pedido.setMedioPago(request.getParameter("medio_pago"));
-         // pedido.setParaLlevar(Byte.parseByte(request.getParameter("pedido_llevar")));
-            
-            
-            
-            
-            
-            
-         request.setAttribute("total", pedido.getTotal());
-         request.setAttribute("lstProductoDetalle", service.buscarElDetalleDelPedido(service.buscarUltimoPedido()));
-         request.setAttribute("lsProducto", service.buscarTodosLosProductos());
-           
-            
-         } catch (SQLException e) {
-         throw new RuntimeException(e);
-         } catch (ServicioException ex) {
-         Logger.getLogger(ControllerPasarPedido.class.getName()).log(Level.SEVERE, null, ex);
-         }
-         */
+            request.getRequestDispatcher("/resumenPedido.jsp").forward(request, response);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
