@@ -173,4 +173,19 @@ public class PedidoDAO {
         
        return recargo; 
     }
+    
+    public void modificar(Pedido pedido){
+        String sql = "update pedido set rut = ?,medio_pago = ?,agranda_bebida_papas = ?,para_llevar = ?,total = ?) where ticket = ?";
+        try (PreparedStatement stmt = cnx.prepareStatement(sql)) {
+            stmt.setInt(1, pedido.getRut());
+            stmt.setString(2, pedido.getMedioPago());
+            stmt.setInt(3, pedido.getAgrandaBebidaPapas());
+            stmt.setInt(4, pedido.getParaLlevar());
+            stmt.setInt(5, pedido.getTotal());
+            stmt.setInt(6, pedido.getTicket());
+            int filasAfectadas = stmt.executeUpdate();
+        } catch (SQLException ex) {
+            throw new RuntimeException("Error al Agregar el Pedido", ex);
+        }
+    }
 }
