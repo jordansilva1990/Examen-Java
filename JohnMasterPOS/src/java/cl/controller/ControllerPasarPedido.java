@@ -69,7 +69,27 @@ public class ControllerPasarPedido extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        try (Connection cnx = ds.getConnection()){
+            JohnMasterService service = new JohnMasterService(cnx);
+            Cliente cliente = new Cliente();
+            cliente.setNombre(request.getParameter("nombre"));
+            cliente.setRutCliente(Integer.parseInt(request.getParameter("rut")));
+            
+            service.agregarCliente(cliente);
+            
+            Pedido pedido = null;
+            pedido = service.buscarUnPedido(service.buscarUltimoPedido());
+            
+            pedido.setAgrandaBebidaPapas(Byte.parseByte(request.getParameter("agranda_bebida_papas")));
+            pedido.setMedioPago(request.getParameter("medio_pago"));
+            pedido.setParaLlevar(Byte.parseByte(request.getParameter("pedido_llevar")));
+            pedido.setRut(Integer.parseInt(request.getParameter("rut")));
+            
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ServicioException ex) {
+            Logger.getLogger(ControllerPasarPedido.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     
