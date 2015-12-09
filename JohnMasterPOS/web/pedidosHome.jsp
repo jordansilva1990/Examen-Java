@@ -32,7 +32,8 @@
                 </br>
             </tr>
 
-            <tr>
+            <form action="<c:url value="/ControllerPasarPedido" />" method="post" >
+                <tr>
                 <td><%@include file="opciones.jsp" %></td>
                 <td>Nombre: <input type="text" name="nombre" value="<c:out value="${cliente.nombre}" />" /> <c:out value="${mapMensajes['nombreCliente']}" /></br>
                     Rut   : <input type="text" name="rut" value="<c:out value="${cliente.rut}" />" /> <c:out value="${mapMensajes['rutCliente']}" /></td>
@@ -88,8 +89,9 @@
             </tr>
             <tr>
                 <td><h2>Total: $ <c:out value="${total}"/></h2></td>
-                <td>Aqui va un boton</td>
+                <td><input type="submit" value="Enviar Pedido"</td>
             </tr>
+            </form>
         </table>
                 
     </body>
