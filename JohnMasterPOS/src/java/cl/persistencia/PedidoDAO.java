@@ -179,11 +179,12 @@ public class PedidoDAO {
         try (PreparedStatement stmt = cnx.prepareStatement(sql)) {
             stmt.setInt(1, pedido.getRut());
             stmt.setString(2, pedido.getMedioPago());
-            stmt.setInt(3, pedido.getAgrandaBebidaPapas());
-            stmt.setInt(4, pedido.getParaLlevar());
             stmt.setInt(5, pedido.getTotal());
             stmt.setInt(6, pedido.getTicket());
-            int filasAfectadas = stmt.executeUpdate();
+            stmt.setInt(3, pedido.getAgrandaBebidaPapas());
+            stmt.setInt(4, pedido.getParaLlevar());
+            
+            stmt.executeUpdate();
         } catch (SQLException ex) {
             throw new RuntimeException("Error al Modificar el Pedido", ex);
         }
@@ -200,7 +201,7 @@ public class PedidoDAO {
 
                     stmt.executeUpdate();
                 } catch (SQLException e) {
-                    throw new RuntimeException("Error al actualizar Total");
+                    throw new RuntimeException("Error al actualizar ");
                 }
     }
 }

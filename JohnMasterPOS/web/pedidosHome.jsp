@@ -32,14 +32,14 @@
                 </br>
             </tr>
 
-            <form action="<c:url value="/ControllerPasarPedido" />" method="post" >
+            <form action="<c:url value="/ControllerAgregarPedido" />" method="post" >
                 <tr>
                 <td><%@include file="opciones.jsp" %></td>
                 <td>Nombre: <input type="text" name="nombre" value="<c:out value="${cliente.nombre}" />" /> <c:out value="${mapMensajes['nombreCliente']}" /></br>
                     Rut   : <input type="text" name="rut" value="<c:out value="${cliente.rut}" />" /> <c:out value="${mapMensajes['rutCliente']}" /></td>
             </tr>
             
-            <form action="<c:url value="/ControllerAgregarPedido" />" method="post" >
+            
              <tr>
                 <td></td>
                 <td>Seleccione un producto o un combo, indique su cantidad y agregue al pedido </br>
@@ -88,6 +88,7 @@
                 </td>
             </tr>
             <tr>
+                <form action="<c:url value="/ControllerPasarPedido" />" method="post" >
                 <td><h2>Total: $ <c:out value="${total}"/></h2></td>
                 <td><input type="submit" value="Enviar Pedido"</td>
             </tr>

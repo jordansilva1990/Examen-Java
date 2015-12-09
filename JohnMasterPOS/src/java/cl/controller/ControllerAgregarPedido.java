@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -98,6 +100,22 @@ public class ControllerAgregarPedido extends HttpServlet {
                 mapMensajes.put("lsProducto", "Tiene que seleccionar un producto para vender!!");
             } 
              //String cantidad= request.getParameter("cantidad");
+             Cliente cliente = new Cliente();
+            String nombre =request.getParameter("nombre");
+            if (nombre.isEmpty()) {
+                mapMensajes.put("nombre_cli", "Debe Ingresar Nombre!!");
+            }else
+            {
+                cliente.setNombre(nombre);
+            }
+            
+            String strRut =request.getParameter("rut");
+            if (strRut.isEmpty()) {
+                mapMensajes.put("rut_cli", "Debe Ingresar Rut");
+            }else
+            {
+                cliente.setRutCliente(Integer.parseInt(strRut));
+            }
             
              
             
@@ -154,7 +172,27 @@ public class ControllerAgregarPedido extends HttpServlet {
                 
                 service.actualizarTotal(numtcket, total);
                 
+                
+                
+                 service.agregarCliente(cliente);
+           
+            
+           
+            pedido = service.buscarUnPedido(service.buscarUltimoPedido());
+            pedido.setRut(Integer.parseInt(strRut));
+            pedido.setMedioPago("test");
+            pedido.setParaLlevar(Byte.parseByte("1"));
+           
+            
+            
+            
+            
+            
+            
+            service.modificarPedido(pedido);
+                
              }
+             request.setAttribute("mapMensajes", mapMensajes);
              request.setAttribute("total", total);
             //request.setAttribute("lsProducto", service.buscarTodosLosProductos());
             //request.setAttribute("lstProductoDetalle", service.buscarTodosLosDetallesPedidoProducto());
@@ -165,6 +203,8 @@ public class ControllerAgregarPedido extends HttpServlet {
             request.getRequestDispatcher("/pedidosHome.jsp").forward(request, response);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (ServicioException ex) {
+            Logger.getLogger(ControllerPasarPedido.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         

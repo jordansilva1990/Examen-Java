@@ -71,6 +71,8 @@ public class ControllerPasarPedido extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        /*
         try (Connection cnx = ds.getConnection()){
             JohnMasterService service = new JohnMasterService(cnx);
             Map<String, String> mapMensajes = new HashMap<>();
@@ -134,6 +136,7 @@ public class ControllerPasarPedido extends HttpServlet {
         } catch (ServicioException ex) {
             Logger.getLogger(ControllerPasarPedido.class.getName()).log(Level.SEVERE, null, ex);
         }
+                */
     }
 
     
