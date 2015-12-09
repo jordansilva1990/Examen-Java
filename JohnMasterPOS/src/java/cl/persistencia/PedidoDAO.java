@@ -175,7 +175,7 @@ public class PedidoDAO {
     }
     
     public void modificar(Pedido pedido){
-        String sql = "update pedido set rut = ?,medio_pago = ?,agranda_bebida_papas = ?,para_llevar = ?,total = ?) where ticket = ?";
+        String sql = "update pedido set rut = ?,medio_pago = ?,agranda_bebida_papas = ?,para_llevar = ?,total = ? where ticket = ?";
         try (PreparedStatement stmt = cnx.prepareStatement(sql)) {
             stmt.setInt(1, pedido.getRut());
             stmt.setString(2, pedido.getMedioPago());
