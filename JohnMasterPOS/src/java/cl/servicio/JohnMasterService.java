@@ -114,4 +114,8 @@ public class JohnMasterService {
     {
           return pedidoDAO.actualizarAgrandado(ticket, agrandado);
     }
+    public void actualizarTotal(int ticket,int total)
+    {
+        pedidoDAO.actualizarTotal(ticket, total);
+    }
 }

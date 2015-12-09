@@ -185,7 +185,22 @@ public class PedidoDAO {
             stmt.setInt(6, pedido.getTicket());
             int filasAfectadas = stmt.executeUpdate();
         } catch (SQLException ex) {
-            throw new RuntimeException("Error al Agregar el Pedido", ex);
+            throw new RuntimeException("Error al Modificar el Pedido", ex);
         }
+    }
+    
+    
+    
+    public void actualizarTotal(int ticket,int total)
+    {
+         String sql = "update pedido set total = ? where ticket = ?";
+                try (PreparedStatement stmt = cnx.prepareStatement(sql)) {
+                    stmt.setInt(1, total);
+                    stmt.setInt(2, ticket);
+
+                    stmt.executeUpdate();
+                } catch (SQLException e) {
+                    throw new RuntimeException("Error al actualizar Total");
+                }
     }
 }

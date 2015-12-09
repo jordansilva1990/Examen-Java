@@ -146,10 +146,13 @@ public class ControllerAgregarPedido extends HttpServlet {
                     total+= service.actualizarAgrandado(detalle.getTicket(), Byte.parseByte(checked));
                   
                  }
-                 
+                 Pedido pedidox = service.buscarUnPedido(detalle.getTicket());
+                    if (pedidox.getAgrandaBebidaPapas() == 1) {
+                 total += 990;
+                 }
             
                 
-                
+                service.actualizarTotal(numtcket, total);
                 
              }
              request.setAttribute("total", total);
