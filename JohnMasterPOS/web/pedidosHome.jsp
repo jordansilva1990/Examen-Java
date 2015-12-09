@@ -1,4 +1,4 @@
-3<%-- 
+<%-- 
     Document   : index
     Created on : 04-12-2015, 23:13:49
     Author     : Jordan
@@ -36,7 +36,7 @@
                 <tr>
                 <td><%@include file="opciones.jsp" %></td>
                 <td>Nombre: <input type="text" name="nombre" value="<c:out value="${cliente.nombre}" />" /> <c:out value="${mapMensajes['nombreCliente']}" /></br>
-                    Rut   : <input type="text" name="rut" value="<c:out value="${cliente.rut}" />" /> <c:out value="${mapMensajes['rutCliente']}" /></td>
+                    Rut   : <input type="text" name="rut" value="<c:out value="${cliente.rutCliente}" />" /> <c:out value="${mapMensajes['rutCliente']}" /></td>
             </tr>
             
             
@@ -58,8 +58,8 @@
                 <td><input type="checkbox" name="agranda_bebida_papas" value="1" /> Agranda bedida y papas</br>
                     <input type="checkbox" name="pedido_llevar" value="1" /> Pedido para llevar</br></br>
                     Medio de Pago</br>
-                    <input type="radio" name="medio_pago"  value="" /> Efectivo</br>
-                    <input type="radio" name="medio_pago" value="" /> Tarjeta debito / credito</td>
+                    <input type="radio" name="medio_pago"  value="efectivo" checked="true"/> Efectivo</br>
+                    <input type="radio" name="medio_pago" value="tarjeta" /> Tarjeta debito / credito</td>
                 <td>            </form>
 
                     <table>

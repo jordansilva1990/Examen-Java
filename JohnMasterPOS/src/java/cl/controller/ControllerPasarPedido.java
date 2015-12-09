@@ -35,20 +35,18 @@ public class ControllerPasarPedido extends HttpServlet {
 
     @Resource(mappedName = "jdbc/johnmaster")
     private DataSource ds;
-    
 
-    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try (Connection cnx = ds.getConnection()){
+        try (Connection cnx = ds.getConnection()) {
             JohnMasterService service = new JohnMasterService(cnx);
-            
+
             Cliente cliente = new Cliente();
             cliente.setNombre("vacio");
             cliente.setRutCliente(1111);
             service.agregarCliente(cliente);
-            
+
             Pedido pedido = new Pedido();
             pedido.setAgrandaBebidaPapas(Byte.parseByte("0"));
             pedido.setMedioPago(" ");
@@ -56,10 +54,10 @@ public class ControllerPasarPedido extends HttpServlet {
             pedido.setRut(cliente.getRutCliente());
             pedido.setTotal(0);
             service.agregarPedido(pedido);
-            
+
             request.setAttribute("lsProducto", service.buscarTodosLosProductos());
             request.getRequestDispatcher("/pedidosHome.jsp").forward(request, response);
-            
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ServicioException ex) {
@@ -67,78 +65,75 @@ public class ControllerPasarPedido extends HttpServlet {
         }
     }
 
-    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        /*
-        try (Connection cnx = ds.getConnection()){
-            JohnMasterService service = new JohnMasterService(cnx);
-            Map<String, String> mapMensajes = new HashMap<>();
-             Pedido pedido = null;
-            Cliente cliente = new Cliente();
-            
-            String nombre =request.getParameter("nombre");
-            if (nombre.isEmpty()) {
-                mapMensajes.put("nombre_cli", "Debe Ingresar Nombre!!");
-            }else
-            {
-                cliente.setNombre(nombre);
-            }
-            
-            String strRut =request.getParameter("rut");
-            if (strRut.isEmpty()) {
-                mapMensajes.put("rut_cli", "Debe Ingresar Rut");
-            }else
-            {
-                cliente.setRutCliente(Integer.parseInt(strRut));
-            }
-            
-            
-            //
-            if (mapMensajes.isEmpty()) {
-                 
-            service.agregarCliente(cliente);
-           
-            
-           
-            pedido = service.buscarUnPedido(service.buscarUltimoPedido());
-            pedido.setRut(Integer.parseInt(strRut));
-            pedido.setMedioPago("test");
-            pedido.setParaLlevar(Byte.parseByte("1"));
-           
-            
-            
-            
-            
-            
-            
-            service.modificarPedido(pedido);
-            }
-           
-            
-           // pedido.setMedioPago(request.getParameter("medio_pago"));
-           // pedido.setParaLlevar(Byte.parseByte(request.getParameter("pedido_llevar")));
-            
-            
-            
-            
-            
-            
-            request.setAttribute("total", pedido.getTotal());
-            request.setAttribute("lstProductoDetalle", service.buscarElDetalleDelPedido(service.buscarUltimoPedido()));
-            request.setAttribute("lsProducto", service.buscarTodosLosProductos());
-           
-            
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ServicioException ex) {
-            Logger.getLogger(ControllerPasarPedido.class.getName()).log(Level.SEVERE, null, ex);
-        }
-                */
-    }
 
-    
+        /*
+         try (Connection cnx = ds.getConnection()){
+         JohnMasterService service = new JohnMasterService(cnx);
+         Map<String, String> mapMensajes = new HashMap<>();
+         Pedido pedido = null;
+         Cliente cliente = new Cliente();
+            
+         String nombre =request.getParameter("nombre");
+         if (nombre.isEmpty()) {
+         mapMensajes.put("nombre_cli", "Debe Ingresar Nombre!!");
+         }else
+         {
+         cliente.setNombre(nombre);
+         }
+            
+         String strRut =request.getParameter("rut");
+         if (strRut.isEmpty()) {
+         mapMensajes.put("rut_cli", "Debe Ingresar Rut");
+         }else
+         {
+         cliente.setRutCliente(Integer.parseInt(strRut));
+         }
+            
+            
+         //
+         if (mapMensajes.isEmpty()) {
+                 
+         service.agregarCliente(cliente);
+           
+            
+           
+         pedido = service.buscarUnPedido(service.buscarUltimoPedido());
+         pedido.setRut(Integer.parseInt(strRut));
+         pedido.setMedioPago("test");
+         pedido.setParaLlevar(Byte.parseByte("1"));
+           
+            
+            
+            
+            
+            
+            
+         service.modificarPedido(pedido);
+         }
+           
+            
+         // pedido.setMedioPago(request.getParameter("medio_pago"));
+         // pedido.setParaLlevar(Byte.parseByte(request.getParameter("pedido_llevar")));
+            
+            
+            
+            
+            
+            
+         request.setAttribute("total", pedido.getTotal());
+         request.setAttribute("lstProductoDetalle", service.buscarElDetalleDelPedido(service.buscarUltimoPedido()));
+         request.setAttribute("lsProducto", service.buscarTodosLosProductos());
+           
+            
+         } catch (SQLException e) {
+         throw new RuntimeException(e);
+         } catch (ServicioException ex) {
+         Logger.getLogger(ControllerPasarPedido.class.getName()).log(Level.SEVERE, null, ex);
+         }
+         */
+    }
 
 }
