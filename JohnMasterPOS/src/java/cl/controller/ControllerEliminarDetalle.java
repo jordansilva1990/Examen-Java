@@ -75,8 +75,6 @@ public class ControllerEliminarDetalle extends HttpServlet {
              service.actualizarTotal(detalleProducto.getTicket(), total);
              
             request.setAttribute("total", total);
-            //se repite DoGet de Pasar Pedido
-            request.setAttribute("lsProducto", service.buscarTodosLosProductos());
 
             // se repite DoGet de Agregar Pedido para obtener los detalles           
             request.setAttribute("lstProductoDetalle", service.buscarElDetalleDelPedido(service.buscarUltimoPedido()));

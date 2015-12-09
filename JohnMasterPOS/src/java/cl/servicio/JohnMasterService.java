@@ -118,4 +118,8 @@ public class JohnMasterService {
     {
         pedidoDAO.actualizarTotal(ticket, total);
     }
+    public void modificarPedido(Pedido pedido)
+    {
+        pedidoDAO.modificar(pedido);
+    }
 }

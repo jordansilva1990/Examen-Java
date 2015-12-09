@@ -14,6 +14,8 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
@@ -71,19 +73,61 @@ public class ControllerPasarPedido extends HttpServlet {
             throws ServletException, IOException {
         try (Connection cnx = ds.getConnection()){
             JohnMasterService service = new JohnMasterService(cnx);
+            Map<String, String> mapMensajes = new HashMap<>();
+             Pedido pedido = null;
             Cliente cliente = new Cliente();
-            cliente.setNombre(request.getParameter("nombre"));
-            cliente.setRutCliente(Integer.parseInt(request.getParameter("rut")));
             
+            String nombre =request.getParameter("nombre");
+            if (nombre.isEmpty()) {
+                mapMensajes.put("nombre_cli", "Debe Ingresar Nombre!!");
+            }else
+            {
+                cliente.setNombre(nombre);
+            }
+            
+            String strRut =request.getParameter("rut");
+            if (strRut.isEmpty()) {
+                mapMensajes.put("rut_cli", "Debe Ingresar Rut");
+            }else
+            {
+                cliente.setRutCliente(Integer.parseInt(strRut));
+            }
+            
+            
+            //
+            if (mapMensajes.isEmpty()) {
+                 
             service.agregarCliente(cliente);
+           
             
-            Pedido pedido = null;
+           
             pedido = service.buscarUnPedido(service.buscarUltimoPedido());
+            pedido.setRut(Integer.parseInt(strRut));
+            pedido.setMedioPago("test");
+            pedido.setParaLlevar(Byte.parseByte("1"));
+           
             
-            pedido.setAgrandaBebidaPapas(Byte.parseByte(request.getParameter("agranda_bebida_papas")));
-            pedido.setMedioPago(request.getParameter("medio_pago"));
-            pedido.setParaLlevar(Byte.parseByte(request.getParameter("pedido_llevar")));
-            pedido.setRut(Integer.parseInt(request.getParameter("rut")));
+            
+            
+            
+            
+            
+            service.modificarPedido(pedido);
+            }
+           
+            
+           // pedido.setMedioPago(request.getParameter("medio_pago"));
+           // pedido.setParaLlevar(Byte.parseByte(request.getParameter("pedido_llevar")));
+            
+            
+            
+            
+            
+            
+            request.setAttribute("total", pedido.getTotal());
+            request.setAttribute("lstProductoDetalle", service.buscarElDetalleDelPedido(service.buscarUltimoPedido()));
+            request.setAttribute("lsProducto", service.buscarTodosLosProductos());
+           
             
         } catch (SQLException e) {
             throw new RuntimeException(e);
