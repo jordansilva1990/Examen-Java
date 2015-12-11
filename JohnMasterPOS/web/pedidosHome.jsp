@@ -36,7 +36,7 @@
             <form action="<c:url value="/ControllerAgregarPedido" />" method="post" >
                 <tr>
                 <td><%@include file="opciones.jsp" %></td>
-                <td>Nombre: <input type="text" name="nombre" value="<c:out value="${cliente.nombre}" />" /> <c:out value="${mapMensajes['nombreCliente']}" /></br>
+                <td>Nombre: <input type="text" name="nombre" value="<c:out value="${cliente.nombre}" />" /> <c:out value="${mapMensajes['nombre']}" /></br>
                     Rut   : <input type="text" name="rut" value="<c:out value="${cliente.rutCliente}" />" /> <c:out value="${mapMensajes['rutCliente']}" /></td>
             </tr>
             
@@ -51,7 +51,7 @@
                                             <c:out value="${p.descripcion}"/>
                                         </option>
                                     </c:forEach>
-                    </select> <input type="submit" method="POST" value="Agregar" /> <c:out value="${mapMensajes['detallePedidoAgregar']}" />
+                    </select> <input type="submit" method="POST" value="Agregar" /> <c:out value="${mapMensajes['detalles']}" />
                 </td>
             </tr>
             

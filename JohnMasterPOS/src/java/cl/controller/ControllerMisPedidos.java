@@ -59,7 +59,7 @@ public class ControllerMisPedidos extends HttpServlet {
              JohnMasterService service = new JohnMasterService(cnx);
              List<String> descripciones =  new ArrayList<String>();
              
-            List<Pedido> lstpedido = service.buscarPedidosCliente(rut);
+             List<Pedido> lstpedido = service.buscarPedidosCliente(rut);
             
              List<String> lstdescripciones = service.obtenerDescripcionPedido(lstpedido);
             
