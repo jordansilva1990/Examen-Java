@@ -88,14 +88,12 @@ public class ControllerPasarPedido extends HttpServlet {
             if (mapMensajes.isEmpty()) {
                 
                 
-                
                 request.setAttribute("cliente", cliente);
                 request.setAttribute("pedido", pedido);
                 request.setAttribute("mapMensajes", mapMensajes);
                 request.getRequestDispatcher("/resumenPedido.jsp").forward(request, response);
-                
-                
             }
+            request.setAttribute("lsProducto", service.buscarTodosLosProductos());
             request.getRequestDispatcher("/pedidosHome.jsp").forward(request, response);
 
         } catch (SQLException e) {
