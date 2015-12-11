@@ -94,6 +94,6 @@
             </tr>
             </form>
         </table>
-                
+           <c:out value="${mensaje}"/>     
     </body>
 </html>

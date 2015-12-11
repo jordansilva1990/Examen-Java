@@ -69,15 +69,35 @@ public class ControllerPasarPedido extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        try (Connection cnx = ds.getConnection()){
+        try (Connection cnx = ds.getConnection()) {
             JohnMasterService service = new JohnMasterService(cnx);
             Pedido pedido = service.buscarUnPedido(service.buscarUltimoPedido());
             Cliente cliente = service.buscarUnCliente(pedido.getRut());
-            
-            request.setAttribute("cliente", cliente);
-            request.setAttribute("pedido", pedido);
-            
-            request.getRequestDispatcher("/resumenPedido.jsp").forward(request, response);
+            Map<String, String> mapMensajes = new HashMap<>();
+
+            if (pedido.getTotal() > 0) {
+            } else {
+                mapMensajes.put("detalles", "Debe ingresar al menos un producto para  continuar");
+            }
+
+            if (cliente.getNombre() != null) {
+
+            } else {
+                mapMensajes.put("nombre", "Debe ingresar su nombre para  continuar");
+            }
+            if (mapMensajes.isEmpty()) {
+                
+                
+                
+                request.setAttribute("cliente", cliente);
+                request.setAttribute("pedido", pedido);
+                request.setAttribute("mapMensajes", mapMensajes);
+                request.getRequestDispatcher("/resumenPedido.jsp").forward(request, response);
+                
+                
+            }
+            request.getRequestDispatcher("/pedidosHome.jsp").forward(request, response);
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
