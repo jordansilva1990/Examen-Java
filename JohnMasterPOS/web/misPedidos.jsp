@@ -18,7 +18,8 @@
         <table border="1">
             <tbody>
                 <tr>
-                    <td>Logo                 </td>
+                    <td><img src="Imagen/logo.JPG" width="254" height="213" alt="logo"/>
+                    </td>
                     <td><h3>Busca tus ultimos pedidos y vuelve a solicitarlos nuevamente</h3></td>
                 </tr>
                 <tr>

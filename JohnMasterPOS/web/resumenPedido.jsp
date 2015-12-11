@@ -14,7 +14,8 @@
     <body>
     <center><table>
             <tr>
-                <td>LOGO</td>
+                <td><img src="Imagen/logo.JPG" width="254" height="213" alt="logo"/>
+                </td>
                 <td></td>
             </tr>
             <tr>

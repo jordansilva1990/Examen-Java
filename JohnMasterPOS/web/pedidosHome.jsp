@@ -26,7 +26,8 @@
     <body>
         <table>
             <tr>
-                <td>LOGO</td>
+                <td><img src="Imagen/logo.JPG" width="254" height="213" alt="logo"/>
+                </td>
                 <td>Bienvenidos a John Master, aquí ud. encontrará los mejores productos</br>
                     Indiquenos su Nombre y su Rut para identificarlo en el pedido</td>
                 </br>
