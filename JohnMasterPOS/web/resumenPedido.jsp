@@ -27,7 +27,8 @@
                 </td>
             </tr>
             <tr>
-                <td>Por favor pase por caja para que luego pueda esperar tranquilamente su pedido</td>
+                <td></td>
+            <center><td>Por favor pase por caja para que luego pueda esperar tranquilamente su pedido</td></center>
             </tr>
         </table></center>
     </body>
