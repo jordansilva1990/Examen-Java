@@ -146,6 +146,13 @@ public class ControllerAgregarPedido extends HttpServlet {
                     total += service.actualizarAgrandado(detalle.getTicket(), Byte.parseByte(checked));
 
                 }
+                
+                String[] llevar = request.getParameterValues("pedido_llevar");
+                if (agranda != null) {
+                    String checked = "1";
+                   service.actualizarParaLlevar(detalle.getTicket(), Byte.parseByte(checked));
+
+                }
                 Pedido pedidox = service.buscarUnPedido(detalle.getTicket());
                 if (pedidox.getAgrandaBebidaPapas() == 1) {
                     total += 990;
@@ -158,7 +165,7 @@ public class ControllerAgregarPedido extends HttpServlet {
                 pedido = service.buscarUnPedido(service.buscarUltimoPedido());
                 pedido.setRut(Integer.parseInt(strRut));
                 pedido.setMedioPago("test");
-                pedido.setParaLlevar(Byte.parseByte("1"));
+               // pedido.setParaLlevar(Byte.parseByte("1"));
 
                 service.modificarPedido(pedido);
 

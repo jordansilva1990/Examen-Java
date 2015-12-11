@@ -5,13 +5,58 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Mis Pedidos</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+         <center>
+             <form action="<c:url value="/ControllerMisPedidos" />" method="post" >
+        <table border="1">
+            <tbody>
+                <tr>
+                    <td>Logo                 </td>
+                    <td><h3>Busca tus ultimos pedidos y vuelve a solicitarlos nuevamente</h3></td>
+                </tr>
+                <tr>
+                    <td><%@include file="opciones.jsp" %><p>        </p></td></td>
+                    <td><input type="text" name="rut" value=""/>  <input type="submit" value="Buscar"/></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><table border="1">
+                        <tr>
+                            <th><center>Pedido</center></th>
+                            <th><center>Valor</center></th>
+                            <th>Acción</th>
+                        </tr>
+                        
+
+                        <tr>
+                            <c:forEach var="x" items="${lstdescripciones}">
+                            <td><c:out value="${x}" /></td>
+                             </c:forEach>
+                            <c:forEach var="p" items="${lstPedidos}">
+                            <td><c:out value="${p.pedidoDTO.total}" /></td>
+                            <td>
+                                <c:url var="urlEliminar" value="/ControllerEliminarDetalle">
+                                    <c:param name="codigoProducto" value="${param.id_pedido_detalle}" />
+                                </c:url>
+                                <form action="${urlEliminar}" method="post">
+                                    <input type="hidden" name="codigoProductoDEL" value="${p.pedidoDetalleDTO.idPedidoDetalle}" />
+                                    <input type="submit" value="-" />
+                                </form>
+                            </td>
+                        </tr>
+                        </c:forEach>
+                    </table></td>
+                </tr>
+            </tbody>
+        </table>
+            </center>
+        </form>
     </body>
 </html>

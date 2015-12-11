@@ -32,6 +32,9 @@ public class PedidoProductoPedidoDetalleDAO {
     
     public List<PedidoProductoPedidoDetalleDTO> buscarPedidoProductoPedidoDetalle(int rut){
         List<PedidoProductoPedidoDetalleDTO> lista = new ArrayList<>();
+        
+        
+        
         String sql = "select * from producto pro join pedido_detalle ped  using(id_producto) join pedido pedi on ped.ticket=ped.ticket where pedi.rut = ? order by ped.id_pedido_detalle";
         
         try (PreparedStatement stmt = cnx.prepareStatement(sql)){
@@ -66,5 +69,7 @@ public class PedidoProductoPedidoDetalleDAO {
             throw new RuntimeException("Error al cargar el detalle del pedido ,pedidoDetalle,producto");
         }
         return lista;
+             
     }
+               
 }

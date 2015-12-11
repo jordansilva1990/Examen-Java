@@ -77,12 +77,13 @@ public class PedidoDAO {
             stmt.setInt(1, rut);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                pedido.setAgrandaBebidaPapas(rs.getByte("agranda_bedida_papas"));
+                
                 pedido.setMedioPago(rs.getString("medio_pago"));
                 pedido.setParaLlevar(rs.getByte("para_llevar"));
                 pedido.setRut(rs.getInt("rut"));
                 pedido.setTicket(rs.getInt("ticket"));
                 pedido.setTotal(rs.getInt("total"));
+                pedido.setAgrandaBebidaPapas(rs.getByte("agranda_bebida_papas"));
 
                 lista.add(pedido);
             }
@@ -148,6 +149,8 @@ public class PedidoDAO {
                 }
             }    
         }
+        
+        
        
         if (agrandado == 0) {
             if (pedido.getAgrandaBebidaPapas() == agrandado) {
@@ -203,5 +206,85 @@ public class PedidoDAO {
                 } catch (SQLException e) {
                     throw new RuntimeException("Error al actualizar ");
                 }
+    }
+    
+    
+    
+    
+    
+    
+    
+    public void actualizarParaLlevar(int ticket, byte paraLlevar) {
+        Pedido pedido = buscar(ticket);
+       
+
+        if (paraLlevar == 1) {
+            if (pedido.getParaLlevar()== paraLlevar) {
+                //Si son iguales no tiene q hacer nada.
+            }else{
+                String sql = "update pedido set para_llevar = ? where ticket = ?";
+                try (PreparedStatement stmt = cnx.prepareStatement(sql)) {
+                    stmt.setByte(1, paraLlevar);
+                    stmt.setInt(2, ticket);
+
+                    stmt.executeUpdate();
+                } catch (SQLException e) {
+                    throw new RuntimeException("Error al actualizar + para llevar");
+                }
+            }    
+        }
+        
+        
+       
+        if (paraLlevar == 0) {
+            if (pedido.getParaLlevar() == paraLlevar) {
+                //Si son iguales no tiene q hacer nada.
+            }else{
+                String sql = "update pedido set para_llevar = ? where ticket = ?";
+                try (PreparedStatement stmt = cnx.prepareStatement(sql)) {
+                    stmt.setByte(1, paraLlevar);
+                    stmt.setInt(2, ticket);
+
+                    stmt.executeUpdate();
+                } catch (SQLException e) {
+                    throw new RuntimeException("Error al actualizar - paraLLevar");
+                }
+            }
+        }
+
+        
+        
+        
+    }
+    
+    
+    public List<String> obtenerDetallesPedido (List<Pedido> pedidos)
+    {
+         List<String> lista = new ArrayList();
+         Pedido pedido = null;
+         
+        for (Pedido ped:pedidos) {
+            
+            String detalle= "";
+            String sql = "select pro.descripcion from producto pro join pedido_detalle ped using(id_producto) join pedido pedi using(ticket) where ticket = ?";      
+        try (PreparedStatement stmt = cnx.prepareStatement(sql)) {
+            stmt.setInt(1, ped.getTicket());
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                
+                detalle+=rs.getString("descripcion");
+                detalle+="+";
+                
+                
+            }
+            lista.add(detalle);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al buscar detalles del pedido");
+        }
+        }
+             
+               
+        return lista;
+        
     }
 }

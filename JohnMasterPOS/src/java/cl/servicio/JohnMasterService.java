@@ -12,10 +12,12 @@ import cl.dominio.Pedido;
 import cl.dominio.PedidoDetalle;
 import cl.dominio.Producto;
 import cl.dto.PedidoDetalleProductoDTO;
+import cl.dto.PedidoProductoPedidoDetalleDTO;
 import cl.persistencia.PedidoClienteDAO;
 import cl.persistencia.PedidoDAO;
 import cl.persistencia.PedidoDetalleDAO;
 import cl.persistencia.PedidoDetalleProductoDAO;
+import cl.persistencia.PedidoProductoPedidoDetalleDAO;
 import java.sql.Connection;
 import java.util.List;
 
@@ -31,6 +33,7 @@ public class JohnMasterService {
     PedidoDetalleDAO pedidoDetalleDAO;
     PedidoDetalleProductoDAO pedidoDetalleProductoDAO;
     ProductoDAO productoDAO;
+    PedidoProductoPedidoDetalleDAO pedidoProductoPedidoDetalleDAO;
 
     public JohnMasterService(Connection cnx) {
         clienteDAO = new ClienteDAO(cnx);
@@ -39,6 +42,7 @@ public class JohnMasterService {
         pedidoDetalleDAO = new PedidoDetalleDAO(cnx);
         pedidoDetalleProductoDAO = new PedidoDetalleProductoDAO(cnx);
         productoDAO = new ProductoDAO(cnx);
+        pedidoProductoPedidoDetalleDAO= new PedidoProductoPedidoDetalleDAO(cnx);
     }
     
     public void agregarCliente(Cliente cli) throws ServicioException{
@@ -122,4 +126,26 @@ public class JohnMasterService {
     {
         pedidoDAO.modificar(pedido);
     }
+    public List<PedidoProductoPedidoDetalleDTO> buscarPedidoProductoPedidoDetalle(int rut)
+    {
+        return pedidoProductoPedidoDetalleDAO.buscarPedidoProductoPedidoDetalle(rut);
+    }
+    public List<Pedido> buscarPedidosCliente(int rut)
+    {
+        return pedidoDAO.buscarPedidosCliente(rut);
+        
+    }
+    public List<PedidoDetalleProductoDTO> buscarDetallesProductos(int id_pedido_detalle)
+    {
+        return pedidoDetalleProductoDAO.buscarPedidoDetallePorPedido(id_pedido_detalle);
+    }
+    public void actualizarParaLlevar (int ticket, byte paraLLevar)
+    {
+        pedidoDAO.actualizarAgrandado(ticket, paraLLevar);
+    }
+    public List<String> obtenerDescripcionPedido(List<Pedido> pedidos)
+    {
+        return pedidoDAO.obtenerDetallesPedido(pedidos);
+    }
 }
+
