@@ -72,7 +72,7 @@ public class PedidoDAO {
     public List<Pedido> buscarPedidosCliente(int rut) {
         List<Pedido> lista = new ArrayList();
         String sql = "select * from pedido where rut=?";
-        Pedido pedido = null;
+        Pedido pedido = new Pedido();
         try (PreparedStatement stmt = cnx.prepareStatement(sql)) {
             stmt.setInt(1, rut);
             ResultSet rs = stmt.executeQuery();

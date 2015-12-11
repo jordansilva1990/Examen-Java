@@ -34,21 +34,15 @@
                             <th>Acción</th>
                         </tr>
                         
-
-                        <tr>
                             <c:forEach var="x" items="${lstdescripciones}">
+                        <tr>
+                            
                             <td><c:out value="${x}" /></td>
                              </c:forEach>
                             <c:forEach var="p" items="${lstPedidos}">
-                            <td><c:out value="${p.pedidoDTO.total}" /></td>
+                            <td><c:out value="${p.total}" /></td>
                             <td>
-                                <c:url var="urlEliminar" value="/ControllerEliminarDetalle">
-                                    <c:param name="codigoProducto" value="${param.id_pedido_detalle}" />
-                                </c:url>
-                                <form action="${urlEliminar}" method="post">
-                                    <input type="hidden" name="codigoProductoDEL" value="${p.pedidoDetalleDTO.idPedidoDetalle}" />
-                                    <input type="submit" value="-" />
-                                </form>
+                                
                             </td>
                         </tr>
                         </c:forEach>
